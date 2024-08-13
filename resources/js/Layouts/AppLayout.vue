@@ -570,10 +570,12 @@ export default {
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex lg:mx-48">
-                                <NavLink class="text-blue-900 font-bold hover:text-red-800" href="/">Home</NavLink>
-                                <NavLink class="text-blue-900 font-bold hover:text-red-800" href="/services">Servicios
+                                <NavLink class="text-blue-900 font-bold hover:text-red-800" href="/">Inicio</NavLink>
+                                <NavLink class="text-blue-900 font-bold hover:text-red-800" href="/advices">Asistencia
                                 </NavLink>
                                 <NavLink class="text-blue-900 font-bold hover:text-red-800" href="/projects">Proyectos
+                                </NavLink>
+                                <NavLink class="text-blue-900 font-bold hover:text-red-800" href="/services">Servicios
                                 </NavLink>
                                 <NavLink class="text-blue-900 font-bold hover:text-red-800" href="#contact">Contacto
                                 </NavLink>

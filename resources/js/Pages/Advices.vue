@@ -70,7 +70,7 @@ export default {
 <style></style>
 
 <template>
-    <AppLayout title="Services">
+    <AppLayout title="Asistencia">
 
         <div class="w-full h-full">
             <section class="bg-ctmblue py-10 md:py-16 xl:relative" id="service">
@@ -79,7 +79,7 @@ export default {
 
                     <h1 class=" font-semibold text-gray-300 text-3xl md:text-6xl text-left leading-normal mb-6
                     font-dancing ">
-                        Nuestros Servicios</h1>
+                        Soluciones de Asistencia Personalizada</h1>
 
                     <div class="flex flex-wrap -mx-2">
                         <div v-for="(service, index) in services" :key="index"
