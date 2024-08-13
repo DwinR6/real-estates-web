@@ -29,9 +29,9 @@ Route::get('/advices', function () {
     return Inertia::render('Advices');
 })->name('advices');
 
-Route::get('/services', function () {
-    return Inertia::render('Services');
-})->name('services');
+Route::get('/maquinaria', function () {
+    return Inertia::render('Machinaries');
+})->name('machinaries');
 
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
 
