@@ -25,7 +25,7 @@ export default {
                     'category': 'client_attendance',
                     'name': 'Asesoria para la eleccion de proyectos',
                     'description': 'Te ayudamos a elegir el proyecto que mejor se adapte a tus necesidades.',
-                    'image': 'asesoria.jpg',
+                    'image': 'advice.jpg',
                     'icon': 'user-check'
                 },
                 {
@@ -54,6 +54,14 @@ export default {
     methods: {
 
     },
+    computed: {
+        getPath() {
+            return (path) => {
+                //env
+                return path ? `image/${path}` : '';
+            }
+        },
+    }
 
 }
 </script>
@@ -77,9 +85,16 @@ export default {
                             class="w-full md:w-1/2 lg:w-1/ px-2 mb-4 flex scroll-animation">
                             <div class="bg-gray-100 p-4 rounded-lg  w-full flex flex-col">
 
+                                <div v-if="service.image"
+                                    class="flex items-center justify-center bg-gray-200 h-20 w-20 rounded-lg mx-auto mb-4">
+                                    <img :src="getPath(service.image)" :alt="service.name"
+                                        class="w-full h-full object-cover">
+                                </div>
                                 <div
                                     class="flex items-center justify-center bg-gray-200 h-20 w-20 rounded-lg mx-auto mb-4">
                                     <i :data-feather="service.icon" class="text-4xl text-ctmred"></i>
+
+
                                 </div>
                                 <h4 class="font-semibold text-blue-900 text-xl mb-2 text-center">{{ service.name }}</h4>
                                 <p class="font-normal text-gray-400 text-base leading-relaxed text-center flex-grow">
