@@ -6,25 +6,17 @@ import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 
+
+import AppLayout from '@/Layouts/AppLayout.vue';
+
+
+
 import { Head, Link } from "@inertiajs/vue3";
 
 const isMenuOpen = ref(false);
 
 defineProps({
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
-    laravelVersion: {
-        type: String,
-        required: true,
-    },
-    phpVersion: {
-        type: String,
-        required: true,
-    },
+
 });
 
 function handleImageError() {
@@ -36,271 +28,862 @@ function handleImageError() {
 </script>
 
 <script>
+
 export default {
     data() {
         return {
-            isScrolling: false,
-
-            scrollOpacity: 0,
-
-            scrolled: false,
+            text: "Desarrolladora JC & DGD Urbano",
+            animatedText: [],
+            animationIndex: 0,
         };
     },
     mounted() {
-        feather.replace();
-        window.addEventListener('scroll', () => {
-            this.isScrolling = window.scrollY > 0;
-
-            const maxScroll = 200;
-
-            this.scrollOpacity = Math.min(window.scrollY / maxScroll, 1);
-            this.scrolled = window.scrollY > 20;
-        });
+        this.animateText();
+        window.addEventListener('scroll', this.handleScroll);
     },
-}
+    methods: {
+        animateText() {
+            this.animatedText = [];
+            this.animationIndex = 0; // Reset the index
+            this.addCharacters();
+        },
+        addCharacters() {
+            // Dividir el texto en caracteres
+            const characters = this.text.split("");
+            if (this.animationIndex < characters.length) {
+                const char = characters[this.animationIndex];
+
+                // Agregar el carácter al texto animado
+                if (char === " ") {
+                    this.animatedText.push({ type: 'space' }); // Manejar espacios en blanco
+                } else if (char === "\n") {
+                    this.animatedText.push({ type: 'break' }); // Manejar saltos de línea
+                } else {
+                    this.animatedText.push({ type: 'char', value: char });
+                }
+                this.animationIndex++;
+                setTimeout(this.addCharacters, 100); // Continuar con el siguiente carácter
+            } else {
+                setTimeout(this.animateText, 6000); // Reiniciar la animación después de un retraso
+            }
+        },
+        handleScroll() {
+            const section = document.getElementById('services');
+            const rect = section.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+
+            // Check if the section is in the viewport
+            if (rect.top < windowHeight && rect.bottom > 0) {
+                // Calculate the percentage of the section that is visible
+                const visiblePercentage = Math.min(1, (windowHeight - rect.top) / rect.height);
+
+                // Set the opacity based on the visible percentage
+                section.style.opacity = visiblePercentage;
+            } else {
+                // Set opacity to 0 if the section is not in the viewport
+                section.style.opacity = 0;
+            }
+        },
+
+    },
+    beforeUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+};
+
+
 </script>
 <style>
-@keyframes fade-in-down {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
+.letter {
+    display: inline-block;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
 
-    100% {
+@keyframes fadeIn {
+    to {
         opacity: 1;
-        transform: translateY(0);
     }
 }
 
-.animate-fade-in-down {
-    animation: fade-in-down 0.3s ease-out both;
+
+.section {
+    position: relative;
+    z-index: 1;
+}
+
+.transition-section {
+    position: relative;
+    min-height: 200px;
+    max-height: 400px;
+
+    /* Adjust as needed */
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    z-index: 0;
+}
+
+.transparent-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    /* Adjust the transparency as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+#services {
+    position: relative;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+#services.fade-in {
+    opacity: 1;
+}
+
+#content {
+    opacity: 0.9;
+    transform: translateX(-20%);
+    transition: opacity 0.5s ease, transform 0.5s ease
 }
 </style>
 
 <template>
+    <AppLayout title="Home">
+        <div class="bg-gray-100 w-full h-full">
 
-    <div class="bg-gray-100 w-full h-full">
+            <Head title="Bienvenido" />
+            <nav class=" bg-transparent fixed -top-5 left-0 right-0 z-10 flex-wrap lg:flex py-14 d-none"
+                style="display: none;">
 
-        <Head title="Welcome" />
-        <nav class="bg-transparent sticky -top-5 left-0 right-0 z-10 flex-wrap lg:flex py-14">
+                <div class="max-w-10xl mx-auto px-4 sm:px-6 lg:px-8 d-none">
+                    <div class="flex justify-between h-16 w-100">
+                        <div class="flex">
+                            <div class="shirnk-0 flex items-around ">
+                                <Link href="/">
+                                <div class="flex flex-row">
+                                    <img src="../../image/logo-jc.jpg" alt="Logo img"
+                                        class="w-28 md:w-80 lg:w-28 rounded-full border-r-2  border-gray-200">
+                                    <img src="../../image/logo-dgd.jpg" alt="Logo img"
+                                        class="w-28 md:w-80 lg:w-28 rounded-full border-r-2  border-gray-200">
+                                </div>
+                                </Link>
 
-            <div class=" max-w-10xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16 w-100">
-                    <div class="flex">
-                        <div class="shirnk-0 flex items-center">
-                            <Link href="/">
-                            <img src="../../image/navbar-logo.png" alt="Logo img" class="w-52 md:w-80 lg:w-full">
-                            </Link>
+                            </div>
 
+                            <!-- Navigation Links -->
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex lg:mx-48">
+                                <NavLink class="text-blue-900 font-bold hover:text-red-500" href="/home">Home</NavLink>
+                                <NavLink class="text-blue-900 font-bold hover:text-red-500" href="/services">Servicios
+                                </NavLink>
+                                <NavLink class="text-blue-900 font-bold hover:text-red-500" href="#projects">Proyectos
+                                </NavLink>
+                                <NavLink class="text-blue-900 font-bold hover:text-red-500" href="#properties">
+                                    Propiedades
+                                </NavLink>
+                                <NavLink class="text-blue-900 font-bold hover:text-red-500" href="#constructions">
+                                    Construcciones</NavLink>
+                                <NavLink class="text-blue-900 font-bold hover:text-red-500" href="#renovations">
+                                    Remodelaciones</NavLink>
+                                <NavLink class="text-blue-900 font-bold hover:text-red-500" href="#contact">Contacto
+                                </NavLink>
+
+                            </div>
+                            <div class="hidden sm:flex sm:items-center sm:ms-6">
+                                <div class="ms-3 relative">
+                                    <!-- Teams Dropdown -->
+                                    <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
+                                        <template #trigger>
+                                            <span class="inline-flex rounded-md">
+                                                <button type="button"
+                                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                                    {{ $page.props.auth.user.current_team.name }}
+
+                                                    <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                                        stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                                    </svg>
+                                                </button>
+                                            </span>
+                                        </template>
+
+                                        <template #content>
+                                            <div class="w-60">
+                                                <!-- Team Management -->
+                                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                                    Manage Team
+                                                </div>
+
+                                                <!-- Team Settings -->
+                                                <DropdownLink
+                                                    :href="route('teams.show', $page.props.auth.user.current_team)">
+                                                    Team Settings
+                                                </DropdownLink>
+
+                                                <DropdownLink v-if="$page.props.jetstream.canCreateTeams"
+                                                    :href="route('teams.create')">
+                                                    Create New Team
+                                                </DropdownLink>
+
+                                                <!-- Team Switcher -->
+                                                <template v-if="$page.props.auth.user.all_teams.length > 1">
+                                                    <div class="border-t border-gray-200" />
+
+                                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                                        Switch Teams
+                                                    </div>
+
+                                                    <template v-for="team in $page.props.auth.user.all_teams"
+                                                        :key="team.id">
+                                                        <form @submit.prevent="switchToTeam(team)">
+                                                            <DropdownLink as="button">
+                                                                <div class="flex items-center">
+                                                                    <svg v-if="team.id == $page.props.auth.user.current_team_id"
+                                                                        class="me-2 h-5 w-5 text-green-400"
+                                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                        viewBox="0 0 24 24" stroke-width="1.5"
+                                                                        stroke="currentColor">
+                                                                        <path stroke-linecap="round"
+                                                                            stroke-linejoin="round"
+                                                                            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                                    </svg>
+
+                                                                    <div>{{ team.name }}</div>
+                                                                </div>
+                                                            </DropdownLink>
+                                                        </form>
+                                                    </template>
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </Dropdown>
+                                </div>
+
+                                <!-- Settings Dropdown -->
+                                <div class="ms-3 relative" v-if="$page.props.auth.user">
+                                    <Dropdown align="right" width="48">
+                                        <template #trigger>
+                                            <button v-if="$page.props.jetstream.managesProfilePhotos"
+                                                class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                                <img class="h-8 w-8 rounded-full object-cover"
+                                                    :src="$page.props.auth.user.profile_photo_url"
+                                                    :alt="$page.props.auth.user.name">
+                                            </button>
+
+                                            <span v-else class="inline-flex rounded-md">
+                                                <button type="button"
+                                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                                    {{ $page.props.auth.user.name ?? '' }}
+
+                                                    <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                                        stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                    </svg>
+                                                </button>
+                                            </span>
+                                        </template>
+
+                                        <template #content>
+                                            <!-- Account Management -->
+                                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                                Manage Account
+                                            </div>
+
+                                            <DropdownLink :href="route('profile.show')">
+                                                Profile
+                                            </DropdownLink>
+
+                                            <DropdownLink v-if="$page.props.jetstream.hasApiFeatures"
+                                                :href="route('api-tokens.index')">
+                                                API Tokens
+                                            </DropdownLink>
+
+                                            <div class="border-t border-gray-200" />
+
+                                            <!-- Authentication -->
+                                            <form @submit.prevent="logout">
+                                                <DropdownLink as="button">
+                                                    Log Out
+                                                </DropdownLink>
+                                            </form>
+                                        </template>
+                                    </Dropdown>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- Navigation Links -->
-                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex lg:mx-48">
-                            <NavLink href="/">Home</NavLink>
-                            <NavLink href="#services">Servicios</NavLink>
-                            <NavLink href="#gallery">Galería</NavLink>
-                            <NavLink href="#testimonials">Recomendaciones</NavLink>
-                            <NavLink href="#boot">Contacto</NavLink>
+                        <!-- Hamburger -->
+                        <div class="-me-2 flex items-center sm:hidden">
+                            <button
+                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                                @click="isMenuOpen = !isMenuOpen">
+                                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path :class="{ 'hidden': isMenuOpen, 'inline-flex': !isMenuOpen }"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 6h16M4 12h16M4 18h16" />
+                                    <path :class="{ 'hidden': !isMenuOpen, 'inline-flex': isMenuOpen }"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
 
+                    </div>
+
+                </div>
+
+                <!-- Responsive Navigation Menu -->
+                <div :class="{ 'block': isMenuOpen, 'hidden': !isMenuOpen }" class="sm:hidden">
+                    <div class="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                            Dashboard
+                        </ResponsiveNavLink>
+                    </div>
+                </div>
+
+            </nav>
+            <section id="home"
+                class="bg-ctmblue p-2 md:px-10 lg:px-16 md:py-16 xl:relative md:min-h-screen flex xl:items-center">
+
+                <div
+                    class="bg-gray-100 lg:max-w-screen-lg xl:max-w-screen-xl mx-auto px-0 md:px-2 border border-red-500 border-8 rounded-lg w-full">
+                    <div
+                        class="flex flex-col md:flex-row items-center justify-center xl:justify-start p-2 md:p-10 lg:p-20 flex-wrap">
+                        <div class="text-center xl:text-left mb-20 xl:mb-0">
+
+                            <div class="">
+                                <h1
+                                    class="font-semibold text-3xl md:text-5xl lg:text-6xl text-ctmblue leading-normal mb-0 font-dancing xl:w-1/2">
+                                    <template v-for=" (item, index) in animatedText" :key="index">
+                                        <span v-if="item.type === 'char'" :style="{ animationDelay: index * 0.1 + 's' }"
+                                            class="letter font-dancing">
+                                            {{ item.value }}
+                                        </span>
+                                        <span v-if="item.type === 'space'" class="letter">
+                                            &nbsp;
+                                        </span>
+                                        <br v-if="item.type === 'break'" />
+                                        <!-- No es necesario manejar espacios en blanco explícitamente si se usa br para saltos de línea -->
+                                    </template>
+                                </h1>
+                            </div>
+
+                            <!--<h1
+                            class="font-semibold text-4xl md:text-6xl lg:text-7xl text-blue-900 leading-normal mb-6 font-dancing">
+                            Desarrolladora JC <br> & DGD Urbano</h1>-->
+
+                            <h2
+                                class="font-semibold text-2xl md:text-2xl lg:text-3xl text-blue-900 leading-normal mb-6">
+                                <span class="">Lotificadora</span> y <span class="">Constructora</span>
+                            </h2>
+
+                            <p
+                                class="font-normal text-base md:text-xl text-gray-400 leading-relaxed mb-12 font-dancin  xl:w-1/2">
+                                Fundada en Anamorós en el 2021, por <span class="font-semibold text-blue-900">Josefina
+                                    Leonor
+                                    Reyes de
+                                    Cruz, </span>
+                                <span class="font-semibold text-blue-900">Lidia Argentina Cruz Reyes </span>
+                                <span class="font-semibold text-blue-900">y Juan Ubaldo Cruz Reyes.</span><br>
+                                Con el objetivo de dignificar el sector inmobiliario en El Salvador,
+                                a través del desarrollo de lotificaciones
+                                planificadas que, ofrecen a sus residentes lotes de terrenos con
+                                enfoque de <span class="text-blue-900">Privacidad, Seguridad y
+                                    Recreación.</span>
+                            </p>
+
+
+                            <a href="#contact"
+                                class="px-6 py-4 bg-ctmred text-gray-300 font-semibold text-lg rounded-xl hover:bg-green-900 transition ease-in-out duration-500">Contáctanos</a>
+                        </div>
+                        <!--video centrado verticalmente a la derecha-->
+                        <div class="xl:flex xl:absolute z-10 right-0 items-center">
+                            <video src="../../video/video-banner-jc.mp4" type="video/mp4" controls autoplay muted
+                                class=""></video>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <div class="transition-section bg-cover bg-center h-screen flex items-center justify-center"
+                style="background-image: url('https://assets.easybroker.com/property_images/3736677/61148863/EB-NI6677.jpg?version=1683829538');">
+                <div class="bg-ctmblue bg-opacity-50 p-8 rounded-lg text-gray-100">
+                    <div class="flex justify-around md:items-center md:space-x-40 flex-wrap">
+                        <div class=" text-center">
+                            <div class="text-2xl md:text-4-xl xl:text-8xl font-bold">4</div>
+                            <div class="text-base mt-2">Proyectos desarrollados</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl md:text-4-xl xl:text-8xl font-bold">40</div>
+                            <div class="text-base mt-2">Casas Construidas</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl md:text-4-xl xl:text-8xl font-bold">546</div>
+                            <div class="text-base mt-2">Empleos Generados</div>
                         </div>
                     </div>
-
-                    <!-- Hamburger -->
-                    <div class="-me-2 flex items-center sm:hidden">
-                        <button
-                            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                            @click="isMenuOpen = !isMenuOpen">
-                            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                <path :class="{ 'hidden': isMenuOpen, 'inline-flex': !isMenuOpen }"
-                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 6h16M4 12h16M4 18h16" />
-                                <path :class="{ 'hidden': !isMenuOpen, 'inline-flex': isMenuOpen }"
-                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
-
                 </div>
             </div>
 
-            <!-- Responsive Navigation Menu -->
-            <div :class="{ 'block': isMenuOpen, 'hidden': !isMenuOpen }" class="sm:hidden">
-                <div class="pt-2 pb-3 space-y-1">
-                    <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                        Dashboard
-                    </ResponsiveNavLink>
-                </div>
-            </div>
+            <!-- feature section -->
+            <section id="services" class="bg-ctmred py-10 md:py-16 xl:relative">
 
-        </nav>
-        <section id="home" class="bg-gray-100 py-10 md:py-16 xl:relative min-h-screen">
-            <div class="min-h-screen bg-gray-100 container lg:max-w-screen-lg 2xl:max-w-screen-2xl mx-auto px-4">
+                <div class="container max-w-screen-xl mx-auto px-4">
 
-                <div class="flex items-center justify-center xl:justify-start">
+                    <div class="flex flex-col xl:flex-row justify-end">
 
-                    <!--<div class="mt-28 text-center xl:text-left">
-                        <h1 class="font-semibold text-4xl md:text-6xl lg:text-7xl text-gray-900 leading-normal mb-6">Get
-                            your dream <br> house now</h1>
+                        <div class="hidden xl:block xl:absolute left-0">
+                            <img src="../../image/banner-jc.jpg" alt="Feature img" width="80%">
+                        </div>
 
-                        <p class="font-normal text-xl text-gray-400 leading-relaxed mb-12">Having a sweet home is
-                            everyone's
-                            dream. Have you <br> owned your dream house?</p>
-
-                        <button
-                            class="px-6 py-4 bg-green-700 text-white font-semibold text-lg rounded-xl hover:bg-green-900 transition ease-in-out duration-500">Contact
-                            us</button>
-                    </div>-->
-                    <!--spanish version-->
-                    <div class="mt-28 text-center xl:text-left">
-                        <h1 class="font-semibold text-4xl md:text-6xl lg:text-7xl text-gray-900 leading-normal mb-6">
-                            Obtenga
-                            su casa de <br> ensueño ahora</h1>
-
-                        <p class="font-normal text-xl text-gray-400 leading-relaxed mb-12">Tener una casa dulce es
-                            el
-                            sueño de
-                            todos. ¿Has <br> tenido tu casa de ensueño?</p>
-
-                        <button
-                            class="px-6 py-4 bg-green-700 text-white font-semibold text-lg rounded-xl hover:bg-green-900 transition ease-in-out duration-500">Contáctenos</button>
-                    </div>
-
-
-
-
-                    <div class="hidden xl:block xl:absolute z-0 top-0 right-0">
-                        <img src="../../image/home-img.png" alt="Home img">
-                    </div>
-
-                </div>
-            </div>
-        </section>
-        <!-- feature section -->
-        <section class="bg-white py-10 md:py-16 xl:relative min-h-screen" id="services">
-
-            <div class="container max-w-screen-xl mx-auto px-4">
-
-                <div class="flex flex-col xl:flex-row justify-end">
-
-                    <div class="hidden xl:block xl:absolute left-0 bottom-0 w-full">
-                        <img src="../../image/feature-img.png" alt="Feature img">
-                    </div>
-
-                    <div class="">
-                        <!--
+                        <div class="">
+                            <!--
                         <h1 class="font-semibold text-gray-900 text-xl md:text-4xl text-center leading-normal mb-6">
                             Choice
                             of various types of <br> house</h1>
                         -->
 
-                        <!--spanish version-->
-                        <h1 class="font-semibold text-gray-900 text-xl md:text-4xl text-center leading-normal mb-6">
-                            Elección de varios tipos de <br> casa</h1>
+                            <!--spanish version-->
+                            <h1
+                                class="font-semibold text-3xl md:text-5xl text-center leading-normal mb-6 font-dancing text-gray-300">
+                                Nuestra Filosofia</h1>
 
-                        <!--
+                            <!--
                         <p class="font-normal text-gray-400 text-md md:text-xl text-center mb-16">We provide a wide of
                             selection of home types for you and your <br> family and are free to choose a home model</p>-->
 
-                        <!--spanish version-->
-                        <p class="font-normal text-gray-400 text-md md:text-xl text-center mb-16">Ofrecemos una amplia
-                            selección de tipos de viviendas para usted y su <br> familia y son libres de elegir un
-                            modelo de vivienda</p>
+                            <!--spanish version-->
+                            <p class="font-normal text-gray-300 text-xl md:text-1xl text-center mb-10">Compromiso con la
+                                Excelencia y la Innovacións <br>
+                                en el Desarrollo Inmobiliario de El Salvador</p>
 
-                        <div class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-20">
-                            <div
-                                class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
-                                <i data-feather="check-circle" class=" text-green-900"></i>
+                            <div class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5">
+                                <div
+                                    class="px-8 h-20 mx-auto md:mx-0 bg-gray-300 rounded-lg flex items-center justify-center mb-5 md:mb-0">
+                                    <i data-feather="check-circle" class="text-red-500"></i>
+                                </div>
+
+                                <!--Spanish version-->
+                                <div class="text-center md:text-left">
+                                    <h4 class="font-semibold text-base md:text-2xl mb-2 text-gray-300">
+                                        Nuestro
+                                        Inicio
+                                    </h4>
+                                    <p class="font-normal text-gray-300 text-base leading-relaxed">
+                                        Iniciamos con la visión de ser la empresa líder en la <br>comercialización de
+                                        proyectos
+                                        de lotificaciones y construcción <br>de viviendas a nivel nacional.
+                                    </p>
+                                </div>
                             </div>
 
-                            <!-- <div class="text-center md:text-left">
-                                <h4 class="font-semibold text-gray-900 text-2xl mb-2">Best Home Guarantee</h4>
-                                <p class="font-normal text-gray-400 text-xl leading-relaxed">We guarantees the quality
-                                    of
-                                    your home you bought <br> from D’house</p>
-                            </div>-->
-
-                            <!--Spanish version-->
-                            <div class="text-center md:text-left">
-                                <h4 class="font-semibold text-gray-900 text-2xl mb-2">Mejor garantía de hogar</h4>
-                                <p class="font-normal text-gray-400 text-xl leading-relaxed">Garantizamos la calidad de
-                                    su
-                                    hogar que compró <br> en D’house</p>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-20">
-                            <div
-                                class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
-                                <i data-feather="lock" class="text-green-900"></i>
-
-                            </div>
-                            <!--
-                            <div class="text-center md:text-left">
-                                <h4 class="font-semibold text-gray-900 text-2xl mb-2">Safe Transaction</h4>
-                                <p class="font-normal text-gray-400 text-xl leading-relaxed">Your transactions will
-                                    always
-                                    be kept confidential <br> and will get discounted</p>
-                            </div>-->
-
-                            <!--Spanish version-->
-                            <div class="text-center md:text-left">
-                                <h4 class="font-semibold text-gray-900 text-2xl mb-2">Transacción segura</h4>
-                                <p class="font-normal text-gray-400 text-xl leading-relaxed">Sus transacciones siempre
-                                    se
-                                    mantendrán confidenciales <br> y obtendrá un descuento</p>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4">
-                            <div
-                                class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
-                                <i data-feather="credit-card" class=" text-green-900"></i>
+                            <div class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5">
+                                <div
+                                    class="px-8 h-20 mx-auto md:mx-0 bg-gray-300 rounded-lg flex items-center justify-center mb-5 md:mb-0">
+                                    <i data-feather="lock" class="text-red-500"></i>
+                                </div>
+                                <div class="text-center md:text-left">
+                                    <h4 class="font-semibold text-xl md:text-2xl mb-2 text-gray-300">
+                                        Soluciones Efectivas y Espíritu de Servicio</h4>
+                                    <p class="font-normal text-gray-300 text-base leading-relaxed">
+                                        Ofrecemos efectivas soluciones de terrenos<br> a los salvadoreños.<br>
+                                        Desde entonces, se ha
+                                        demostrado el verdadero espíritu y <br>mística en el servicio a nuestros
+                                        clientes.
+                                    </p>
+                                </div>
                             </div>
 
-                            <!--<div class="text-center md:text-left">
-                                <h4 class="font-semibold text-gray-900 text-2xl mb-2">Low and Cost Home Taxes</h4>
-                                <p class="font-normal text-gray-400 text-xl leading-relaxed">By buying a house from
-                                    D’house,
-                                    you will get a tax <br> discount</p>
-                            </div>-->
-
-                            <!--Spanish version-->
-                            <div class="text-center md:text-left">
-                                <h4 class="font-semibold text-gray-900 text-2xl mb-2">Impuestos bajos y económicos
-                                    para
-                                    el hogar</h4>
-                                <p class="font-normal text-gray-400 text-xl leading-relaxed">Al comprar una casa de
-                                    D’house,
-                                    obtendrá un descuento fiscal</p>
+                            <div class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4">
+                                <div
+                                    class="px-8 h-20 mx-auto md:mx-0 bg-gray-300 rounded-lg flex items-center justify-center mb-5 md:mb-0">
+                                    <i data-feather="credit-card" class="text-red-500"></i>
+                                </div>
+                                <div class="text-center md:text-left">
+                                    <h4 class="font-semibold text-xl md:text-2xl mb-2 text-gray-300">
+                                        Compromiso Social y
+                                        Corporativo
+                                    </h4>
+                                    <p class="font-normal text-gray-300 text-base leading-relaxed">
+                                        Desarrollamos proyectos de lotificaciones <br> con compromiso social y
+                                        corporativo.
+                                    </p>
+                                </div>
                             </div>
+
+
+
                         </div>
 
                     </div>
 
+                </div> <!-- container.// -->
+
+            </section>
+
+
+            <!-- feature section -->
+            <section class="bg-gray-100 py-10 md:py-16 xl:relative" id="aboutUs">
+
+                <div class="content-wrapper">
+                    <div class="">
+                        <div class="container max-w-screen-xl mx-auto px-4">
+                            <h1
+                                class="font-semibold text-3xl md:text-5xl text-center leading-normal mb-6 font-dancing text-ctmblue">
+                                Mision y Vision</h1>
+                            <div class="flex flex-col xl:flex-row justify-between scroll-animation">
+
+
+                                <div
+                                    class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5 lg:pr-10">
+
+                                    <div class="text-center md:text-left">
+                                        <h4 class="font-semibold text-red-500 text-xl md:text-3xl mb-2">Mision</h4>
+                                        <p
+                                            class="font-normal text-gray-400 text-base md:text-xl xl:text-2xl leading-relaxed">
+                                            Satisfacer a nuestros compradores ofreciéndoles desarrollos en los terrenos
+                                            <br>y
+                                            viviendas habitacionales innovadoras e integrales a precios competitivos,
+                                            certificando la excelencia en el producto y el servicio, de conformidad con
+                                            la
+                                            sociedad y el medio ambiente.
+                                        </p>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5">
+
+                                    <div class="text-center md:text-left">
+
+                                        <h4 class="font-semibold text-red-500 text-xl md:text-3xl mb-2">Vision</h4>
+                                        <p
+                                            class="font-normal text-gray-400 text-base md:text-xl xl:text-2xl leading-relaxed">
+                                            Ser líderes en el Salvador, en la comercialización de proyectos de
+                                            Lotificaciones y
+                                            construcción de viviendas innovadoras de conformidad con la sociedad y el
+                                            medio
+                                            ambiente.
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <h1
+                                class="font-semibold text-3xl md:text-5xl text-center leading-normal mb-6 font-dancing text-ctmblue">
+                                Nuestros Valores</h1>
+                            <div class="flex flex-col md:flex-row justify-between scroll-animation">
+
+                                <div class="">
+                                    <div
+                                        class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5">
+                                        <div
+                                            class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
+                                            <i data-feather="heart" class="text-red-500"></i>
+                                        </div>
+
+                                        <div class="text-center md:text-left">
+                                            <h4 class="font-semibold text-ctmblue text-xl md:text-2xl mb-2">Lealtad
+                                            </h4>
+                                            <p
+                                                class="font-normal text-gray-400 text-base md:text-xl xl:text-1xl leading-relaxed">
+                                                Ser leales a nuestros clientes, colaboradores y proveedores.
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                    <div
+                                        class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5">
+                                        <div
+                                            class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
+                                            <i data-feather="users" class="text-red-500"></i>
+                                        </div>
+                                        <div class="text-center md:text-left">
+                                            <h4 class="font-semibold text-ctmblue text-xl md:text-2xl mb-2">Respeto
+                                            </h4>
+                                            <p
+                                                class="font-normal text-gray-400 text-base md:text-xl xl:text-1xl leading-relaxed">
+                                                Respetar a nuestros clientes, colaboradores y proveedores.</p>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5">
+                                        <div
+                                            class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
+                                            <i data-feather="check-circle" class="text-red-500"></i>
+                                        </div>
+
+                                        <div class="text-center md:text-left">
+                                            <h4 class="font-semibold text-ctmblue text-xl md:text-2xl mb-2 ">Eficacia
+                                            </h4>
+                                            <p
+                                                class="font-normal text-gray-400 text-base md:text-xl xl:text-1xl leading-relaxed">
+                                                Ser eficaces en la comercialización de proyectos de lotificaciones y
+                                                construcción de
+                                                viviendas.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div
+                                        class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5">
+                                        <div
+                                            class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
+                                            <i data-feather="flag" class="text-red-500"></i>
+                                        </div>
+                                        <div class="text-center md:text-left">
+                                            <h4 class="font-semibold text-ctmblue  text-xl md:text-2xl mb-2">Compromiso
+                                            </h4>
+                                            <p
+                                                class="font-normal text-gray-400 text-base md:text-xl xl:text-1xl leading-relaxed">
+                                                Ser comprometidos con nuestros clientes, colaboradores y proveedores.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5">
+                                        <div
+                                            class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
+                                            <i data-feather="share-2" class="text-red-500"></i>
+                                        </div>
+                                        <div class="text-center md:text-left">
+                                            <h4 class="font-semibold text-ctmblue text-xl md:text-2xl mb-2">Solidaridad
+                                            </h4>
+                                            <p
+                                                class="font-normal text-gray-400 text-base md:text-xl xl:text-1xl leading-relaxed">
+                                                Ser solidarios con nuestros clientes, colaboradores y proveedores.</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div> <!-- container.// -->
+                    </div>
+
+                </div>
+            </section>
+            <div class="transition-section bg-cover bg-center h-screen flex items-center justify-center"
+                style="background-image: url('https://homes-real-estate.easybroker.com/themes/merida/built_in_images/img-merida.png');">
+                <div class="bg-ctmblue bg-opacity-50 p-8 rounded-lg text-gray-100">
+                    <div class="flex justify-around items-center space-x-40">
+                        <!--Mensaje de motivacion al visitante para que adquiera una propiedad con nosotros-->
+                        <div class="text-center">
+                            <div class="text-3xl md:text-5xl xl:text-6xl font-bold font-dancing">Desarrolladora JC & DGD
+                                Urbano
+                            </div>
+                            <div class="text-lg mt-2">Adquiere tu propiedad con nosotros</div>
+                            <div class="text-lg mt-2">y asegura tu futuro</div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- top de propiedades en venta-->
+
+            <!--
+            <section class="bg-gray-100 py-10 md:py-16 xl:relative" id="properties">
+
+            <div class="container max-w-screen-xl mx-auto px-4">
+
+                <div class="flex flex-col md:flex-row justify-center">
+
+                    <div class="text-center md:text-left">
+                        <h1 class="font-semibold text-gray-900 text-2xl md:text-4xl text-center leading-normal mb-6">
+                            Propiedades en venta</h1>
+                    </div>
+
                 </div>
 
-            </div> <!-- container.// -->
+                <p class="font-normal text-gray-400 text-md md:text-xl text-center mb-16">
+                    Encuentra tu hogar ideal en una de nuestras propiedades en venta
+                </p>
 
-        </section>
-        <!-- gallery section -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+                    <div
+                        class="mx-3 mt-6 flex flex-col rounded-lg bg-gray-100 text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-gray-500 sm:shrink-0 sm:grow sm:basis-0">
+                        <a href="#!">
+                            <img class="rounded-t-lg" src="https://tecdn.b-cdn.net/img/new/standard/city/041.webp"
+                                alt="Hollywood Sign on The Hill" />
+                        </a>
+                        <div class="p-6">
+                            <h5 class="mb-2 text-xl font-medium leading-tight">Card title</h5>
+                            <p class="mb-4 text-base">
+                                This is a longer card with supporting text below as a natural
+                                lead-in to additional content. This content is a little bit
+                                longer.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="mx-3 mt-6 flex flex-col rounded-lg bg-gray-100 text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-gray-500 sm:shrink-0 sm:grow sm:basis-0">
+                        <a href="#!">
+                            <img class="rounded-t-lg" src="https://tecdn.b-cdn.net/img/new/standard/city/042.webp"
+                                alt="Palm Springs Road" />
+                        </a>
+                        <div class="p-6">
+                            <h5 class="mb-2 text-xl font-medium leading-tight">Card title</h5>
+                            <p class="mb-4 text-base">
+                                This is a longer card with supporting text below as a natural
+                                lead-in to additional content. This content is a little bit
+                                longer.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="container max-w-screen-xl mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-center">
+                    <div class="text-center md:text-left">
+                        <a href="#"
+                            class="px-6 py-4 bg-green-700 text-white font-semibold text-lg rounded-xl hover:bg-green-900 transition ease-in-out duration-500">Ver
+                            todas las propiedades</a>
+                    </div>
+
+                    <div class="text-center md:text-left mx-2">
+                        <a href="#"
+                            class="px-2 py-4 bg-green-700 text-white font-semibold text-lg rounded-xl hover:bg-green-900 transition ease-in-out duration-500">
+                            Agregar
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </section>-->
+
+            <!-- top de proyectos-- diseñar card estatica para mostrar los proyectos mas recientes -->
+            <!--
+        <section class="bg-gray-100 py-10 md:py-16 xl:relative min-h-screen" id="services">
+
+            <div class="container max-w-screen-xl mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-center">
+                    <div class="text-center md:text-left">
+                        <h1 class="font-semibold text-gray-900 text-2xl md:text-4xl text-center leading-normal mb-6">
+                            Proyectos</h1>
+                    </div>
+
+                </div>
+
+                <p class="font-normal text-gray-400 text-md md:text-xl text-center mb-16">
+                    Construye tu futuro en uno de nuestros proyectos, conoce los proyectos más recientes
+                </p>
+            </div>
+
+            <div
+                class="container max-w-screen-xl mx-auto px-4 grid-cols-1 sm:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+
+                <div
+                    class="mx-3 mt-6 flex flex-col rounded-lg bg-gray-100 text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-gray-500 sm:shrink-0 sm:grow sm:basis-0">
+                    <a href="#!">
+                        <img class="rounded-t-lg" src="https://tecdn.b-cdn.net/img/new/standard/city/041.webp"
+                            alt="Hollywood Sign on The Hill" />
+                    </a>
+                    <div class="p-6">
+                        <h5 class="mb-2 text-xl font-medium leading-tight">Card title</h5>
+                        <p class="mb-4 text-base">
+                            This is a longer card with supporting text below as a natural
+                            lead-in to additional content. This content is a little bit
+                            longer.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    class="mx-3 mt-6 flex flex-col rounded-lg bg-gray-100 text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-gray-500 sm:shrink-0 sm:grow sm:basis-0">
+                    <a href="#!">
+                        <img class="rounded-t-lg" src="https://tecdn.b-cdn.net/img/new/standard/city/042.webp"
+                            alt="Palm Springs Road" />
+                    </a>
+                    <div class="p-6">
+                        <h5 class="mb-2 text-xl font-medium leading-tight">Card title</h5>
+                        <p class="mb-4 text-base">
+                            This is a longer card with supporting text below as a natural
+                            lead-in to additional content. This content is a little bit
+                            longer.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    class="mx-3 mt-6 flex flex-col rounded-lg bg-gray-100 text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-gray-500 sm:shrink-0 sm:grow sm:basis-0">
+                    <a href="#!">
+                        <img class="rounded-t-lg" src="https://tecdn.b-cdn.net/img/new/standard/city/044.webp"
+                            alt="Skyscrapers" />
+                    </a>
+                    <div class="p-6">
+                        <h5 class="mb-2 text-xl font-medium leading-tight">Card title</h5>
+                        <p class="mb-4 text-base">
+                            This is a longer card with supporting text below as a natural
+                            lead-in to additional content.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    class="mx-3 mt-6 flex flex-col rounded-lg bg-gray-100 text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-gray-500 sm:shrink-0 sm:grow sm:basis-0">
+                    <a href="#!">
+                        <img class="rounded-t-lg" src="https://tecdn.b-cdn.net/img/new/standard/city/043.webp"
+                            alt="Los Angeles Skyscrapers" />
+                    </a>
+                    <div class="p-6">
+                        <h5 class="mb-2 text-xl font-medium leading-tight">Card title</h5>
+                        <p class="mb-4 text-base">
+                            This is a longer card with supporting text below as a natural
+                            lead-in to additional content. This content is a little bit
+                            longer.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container max-w-screen-xl mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-center">
+                    <div class="text-center md:text-left">
+                        <a href="#"
+                            class="px-6 py-4 bg-green-700 text-white font-semibold text-lg rounded-xl hover:bg-green-900 transition ease-in-out duration-500">Ver
+                            todos los proyectos</a>
+                    </div>
+
+                    <div class="text-center md:text-left mx-2">
+                        <a href="#"
+                            class="px-2 py-4 bg-green-700 text-white font-semibold text-lg rounded-xl hover:bg-green-900 transition ease-in-out duration-500">
+                            Agregar
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>-->
+
+
+            <!-- gallery section -->
+            <!--
         <section id="gallery" class="bg-white py-10 md:py-16">
 
             <div class="container max-w-screen-xl mx-auto px-4">
 
-                <!--<h1 class="font-semibold text-gray-900 text-4xl text-center mb-10">Our Gallery</h1>-->
                 <h1 class="font-semibold text-gray-900 text-4xl text-center mb-10">Galeria</h1>
-
-                <!-- <div class="hidden md:block flex items-center text-center space-x-10 lg:space-x-20 mb-12">
-                    <a href="#"
-                        class="px-6 py-2 bg-green-800 text-white font-semibold text-xl rounded-lg hover:bg-green-600 transition ease-in-out duration-500">All</a>
-                    <a href="#"
-                        class="px-6 py-2 text-gray-900 font-normal text-xl rounded-lg hover:bg-gray-200 hover:text-gray-400 transition ease-in-out duration-500">Exterior</a>
-                    <a href="#"
-                        class="px-6 py-2 text-gray-900 font-normal text-xl rounded-lg hover:bg-gray-200 hover:text-gray-400 transition ease-in-out duration-500">Interior</a>
-                    <a href="#"
-                        class="px-6 py-2 text-gray-900 font-normal text-xl rounded-lg hover:bg-gray-200 hover:text-gray-400 transition ease-in-out duration-500">Building</a>
-                </div> -->
 
                 <div class="hidden md:block flex items-center text-center space-x-10 lg:space-x-20 mb-12">
                     <a href="#"
@@ -338,24 +921,22 @@ export default {
                     </div>
                 </div>
 
-            </div> <!-- container.// -->
+            </div>
 
-        </section>
-        <!-- gallery section //end -->
+        </section>-->
+            <!-- gallery section //end -->
 
-        <!-- testimoni section -->
+            <!-- testimoni section -->
+            <!--
         <section class="bg-white py-10 md:py-16" id="testimonials">
 
             <div class="container max-w-screen-xl mx-auto px-4 xl:relative">
 
-                <!-- <p class="font-normal text-gray-400 text-lg md:text-xl text-center uppercase mb-6">Testimonial</p> -->
-                <p class="font-normal text-gray-400 text-lg md:text-xl text-center uppercase mb-6">Testimonios</p>
+                <p class="font-normal text-gray-400 text-lg md:text-xl text-center uppercase mb-6">
+                    Testimonios</p>
 
-                <!--<h1 class="font-semibold text-gray-900 text-2xl md:text-4xl text-center leading-normal mb-14">What
-                    People
-                    Say <br> About D’house</h1>-->
-
-                <h1 class="font-semibold text-gray-900 text-2xl md:text-4xl text-center leading-normal mb-14">Lo que
+                <h1 class="font-semibold text-gray-900 text-2xl md:text-4xl text-center leading-normal mb-14">
+                    Lo que
                     la
                     gente dice <br> sobre D’house</h1>
 
@@ -382,18 +963,16 @@ export default {
                             <i data-feather="star" class="text-yellow-500"></i>
                         </div>
 
-                        <!-- <p class="font-normal text-sm lg:text-md text-gray-400 mx-8 my-8">I recommend anyone to buy
-                            house on
-                            <br> D’house. I received great customer service <br> from the specialists who helped me.
-                        </p> -->
-                        <!--spanish version-->
 
-                        <p class="font-normal text-sm lg:text-md text-gray-400 mx-8 my-8">Recomiendo a cualquiera que
+                        <p class="font-normal text-sm lg:text-md text-gray-400 mx-8 my-8">Recomiendo a
+                            cualquiera que
                             compre
-                            una casa en D’house. Recibí un excelente servicio al cliente de los especialistas que me
+                            una casa en D’house. Recibí un excelente servicio al cliente de los
+                            especialistas que me
                             ayudaron.</p>
 
-                        <h3 class="font-semibold text-gray-900 text-xl md:text-2xl lg:text-3xl mx-8 mb-8">Brooklyn
+                        <h3 class="font-semibold text-gray-900 text-xl md:text-2xl lg:text-3xl mx-8 mb-8">
+                            Brooklyn
                             Simmons
                         </h3>
                     </div>
@@ -408,212 +987,27 @@ export default {
                             <i data-feather="star" class="text-yellow-500"></i>
                             <i data-feather="star" class="text-yellow-500"></i>
                         </div>
-
-                        <!-- <p class="font-normal text-sm lg:text-md text-gray-400 mx-8 my-8">D’house is the best property
-                            agent
-                            in the <br> world. I received great customer service <br> from the D’house agent</p> -->
-
-                        <!--spanish version-->
-                        <p class="font-normal text-sm lg:text-md text-gray-400 mx-8 my-8">D’house es el mejor agente
+                        <p class="font-normal text-sm lg:text-md text-gray-400 mx-8 my-8">D’house es el
+                            mejor agente
                             de
-                            propiedades del mundo. Recibí un excelente servicio al cliente del agente de D’house</p>
+                            propiedades del mundo. Recibí un excelente servicio al cliente del agente de
+                            D’house</p>
 
-                        <h3 class="font-semibold text-gray-900 text-xl md:text-2xl lg:text-3xl mx-8 mb-8">Ralph Edwards
+                        <h3 class="font-semibold text-gray-900 text-xl md:text-2xl lg:text-3xl mx-8 mb-8">
+                            Ralph Edwards
                         </h3>
                     </div>
 
                 </div>
 
-            </div> <!-- container.// -->
+            </div>
+        </section>-->
+            <!-- testimoni section //end -->
 
-        </section>
-        <!-- testimoni section //end -->
 
-        <!-- book section -->
-        <section class="bg-white py-10 md:py-16" id="book">
+            <!-- book section //end -->
 
-            <div class="container max-w-screen-xl mx-auto px-4 xl:relative">
 
-                <div class="bg-green-800 flex flex-col lg:flex-row items-center justify-evenly py-14 rounded-3xl">
-
-                    <!-- <div class="text-center lg:text-left mb-10 lg:mb-0">
-                        <h1 class="font-semibold text-white text-4xl md:text-5xl lg:text-7xl leading-normal mb-4">Talk
-                            to us
-                            <br> to discuss
-                        </h1>
-
-                        <p class="font-normal text-white text-md md:text-xl">Need more time to discuss? Won’t worry, we
-                            are
-                            <br> ready to help you. You can fill in the column on the <br> right to book a meeting with
-                            us.
-                            Totally free.
-                        </p>
-                    </div> -->
-
-                    <!--spanish version-->
-                    <div class="text-center lg:text-left mb-10 lg:mb-0">
-                        <h1 class="font-semibold text-white text-4xl md:text-5xl lg:text-7xl leading-normal mb-4">Hable
-                            con
-                            nosotros
-                            <br> para discutir
-                        </h1>
-
-                        <p class="font-normal text-white text-md md:text-xl">¿Necesita más tiempo para discutir? No se
-                            preocupe, estamos <br> listos para ayudarte. Puede completar la columna de la <br> derecha
-                            para
-                            reservar una reunión con nosotros. Totalmente gratis.
-                        </p>
-                    </div>
-
-                    <div class="hidden xl:block xl:absolute right-0">
-                        <img src="../../image/book.png" alt="Image">
-                    </div>
-
-                    <div class="hidden md:block bg-white xl:relative px-6 py-3 rounded-3xl">
-                        <!-- <div class="py-3">
-                            <h3 class="font-semibold text-gray-900 text-3xl">Book a meeting</h3>
-                        </div> -->
-
-                        <!--spanish version-->
-                        <div class="py-3">
-                            <h3 class="font-semibold text-gray-900 text-3xl">Reservar una reunión</h3>
-                        </div>
-                        <div class="py-3">
-                            <input type="text" placeholder="Full Name"
-                                class="px-4 py-4 w-96 bg-gray-100 placeholder-gray-400 rounded-xl outline-none">
-                        </div>
-
-                        <div class="py-3">
-                            <input type="text" placeholder="Email"
-                                class="px-4 py-4 w-96 bg-gray-100 placeholder-gray-400 rounded-xl outline-none">
-                        </div>
-
-                        <div class="py-3 relative">
-                            <input type="text" placeholder="Date"
-                                class="px-4 py-4 w-96 bg-gray-100 font-normal text-lg placeholder-gray-400 rounded-xl outline-none">
-
-                            <div class="absolute inset-y-0 left-80 ml-6 flex items-center text-xl text-gray-600">
-                                <i data-feather="calendar"></i>
-                            </div>
-                        </div>
-
-                        <div class="py-3 relative">
-                            <input type="text" placeholder="Virtual Meeting"
-                                class="px-4 py-4 w-96 bg-gray-100 placeholder-gray-400 rounded-xl outline-none">
-
-                            <div class="absolute inset-y-0 left-80 ml-6 flex items-center text-xl text-gray-600">
-                                <i data-feather="chevron-down"></i>
-                            </div>
-                        </div>
-
-                        <div class="py-3">
-                            <!-- <button
-                                class="w-full py-4 font-semibold text-lg text-white bg-green-700 rounded-xl hover:bg-green-900 transition ease-in-out duration-500">Booking</button> -->
-
-                            <!--spanish version-->
-                            <button
-                                class="w-full py-4 font-semibold text-lg text-white bg-green-700 rounded-xl hover:bg-green-900 transition ease-in-out duration-500">Reserva</button>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div> <!-- container.// -->
-
-        </section>
-        <!-- book section //end -->
-
-        <!-- footer -->
-        <footer class="bg-white py-10 md:py-16">
-
-            <div class="container max-w-screen-xl mx-auto px-4">
-
-                <div class="flex flex-col lg:flex-row justify-between">
-                    <div class="text-center lg:text-left mb-10 lg:mb-0">
-                        <div class="flex justify-center lg:justify-start mb-5">
-                            <img src="../../image/footer-logo.png" alt="Image">
-                        </div>
-
-                        <p class="font-light text-gray-400 text-xl mb-10">Get your dream house with <br> D’house</p>
-
-                        <div class="flex items-center justify-center lg:justify-start space-x-5">
-                            <a href="#"
-                                class="px-3 py-3 bg-gray-200 text-gray-700 rounded-full hover:bg-green-800 hover:text-white transition ease-in-out duration-500">
-                                <i data-feather="facebook"></i>
-                            </a>
-
-                            <a href="#"
-                                class="px-3 py-3 bg-gray-200 text-gray-700 rounded-full hover:bg-green-800 hover:text-white transition ease-in-out duration-500">
-                                <i data-feather="twitter"></i>
-                            </a>
-
-                            <a href="#"
-                                class="px-3 py-3 bg-gray-200 text-gray-700 rounded-full hover:bg-green-800 hover:text-white transition ease-in-out duration-500">
-                                <i data-feather="linkedin"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="text-center lg:text-left mb-10 lg:mb-0">
-                        <h4 class="font-semibold text-gray-900 text-2xl mb-6">Sitemap</h4>
-
-                        <a href="#home"
-                            class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Home</a>
-
-                        <a href="#services"
-                            class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Features</a>
-
-                        <a href="#gallery"
-                            class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Gallery</a>
-
-                        <a href="#testimonials"
-                            class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Testimonials</a>
-
-                        <a href="#book"
-                            class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Book
-                            a meeting</a>
-                    </div>
-
-                    <!-- <div class="text-center lg:text-left mb-10 lg:mb-0">
-                        <h4 class="font-semibold text-gray-900 text-2xl mb-6">Landing</h4>
-
-                        <a href="#"
-                            class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Mobile
-                            App</a>
-
-                        <a href="#"
-                            class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Property</a>
-
-                        <a href="#"
-                            class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Personal
-                            Website</a>
-
-                        <a href="#"
-                            class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Web
-                            Developer</a>
-
-                        <a href="#"
-                            class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Online
-                            Course</a>
-
-                        <a href="#"
-                            class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Donation</a>
-                    </div> -->
-
-                    <div class="text-center lg:text-left">
-                        <h4 class="font-semibold text-gray-900 text-2xl mb-6">Utility</h4>
-
-                        <a href="#"
-                            class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">FAQ</a>
-
-                        <a href="#"
-                            class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Terms
-                            & Conditions</a>
-                    </div>
-                </div>
-
-            </div> <!-- container.// -->
-
-        </footer>
-    </div>
+        </div>
+    </AppLayout>
 </template>
