@@ -1,17 +1,43 @@
 <?php
 
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+
+Route::get('projects/create', [ProjectController::class, 'create'])->name('projects.create');
+
+Route::post('/images/upload', [ImageController::class, 'upload'])->name('images.upload');
+
+Route::get('/login', function () {
+    return Inertia::render('Auth/Login');
+})->name('login');
+
+Route::get('/register', function () {
+    return Inertia::render('Auth/Register');
+})->name('register');
+
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Inertia::render('Welcome');
 });
+
+
+
+Route::get('/services', function () {
+    return Inertia::render('Services');
+})->name('services');
+
+Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
+
+
+Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects.show');
+
+
+
+
+
 
 Route::middleware([
     'auth:sanctum',
@@ -21,6 +47,12 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::get('/projects/{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+
+
+    Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+    Route::put('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
@@ -33,6 +65,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     // Ruta para crear un nuevo equipo
     Route::get('/teams/create', function () {
-        // Aquí puedes devolver una vista o realizar alguna lógica
+        return Inertia::render('Auth/Register');
     })->name('teams.create');
 });
