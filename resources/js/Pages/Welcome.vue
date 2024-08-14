@@ -457,7 +457,7 @@ export default {
 
                             <!--spanish version-->
                             <h1
-                                class="font-semibold text-3xl md:text-5xl text-center leading-normal mb-6 font-dancing text-gray-300">
+                                class="font-semibold text-4xl md:text-5xl text-center leading-normal mb-6 font-dancing text-gray-300">
                                 Nuestra Filosofia</h1>
 
                             <!--
@@ -537,147 +537,142 @@ export default {
             <!-- feature section -->
             <section class="bg-gray-100 py-10 md:py-16 xl:relative" id="aboutUs">
 
-                <div class="content-wrapper">
-                    <div class="">
-                        <div class="container max-w-screen-xl mx-auto px-4">
-                            <h1
-                                class="font-semibold text-3xl md:text-5xl text-center leading-normal mb-6 font-dancing text-ctmblue">
-                                Mision y Vision</h1>
-                            <div class="flex flex-col xl:flex-row justify-between scroll-animation">
+                <div class="flex flex-col">
+                    <div class="max-w-screen-xl mx-auto p-5">
+                        <h1
+                            class="font-semibold text-3xl md:text-5xl text-center leading-normal mb-6 font-dancing text-ctmblue">
+                            Mision y Vision</h1>
+                        <div class="flex flex-col md:flex-row justify-between">
 
 
-                                <div
-                                    class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5 lg:pr-10">
+                            <div class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5 px-10">
 
-                                    <div class="text-center md:text-left">
-                                        <h4 class="font-semibold text-red-500 text-xl md:text-3xl mb-2">Mision</h4>
-                                        <p
-                                            class="font-normal text-gray-400 text-base md:text-xl xl:text-2xl leading-relaxed">
-                                            Satisfacer a nuestros compradores ofreciéndoles desarrollos en los terrenos
-                                            <br>y
-                                            viviendas habitacionales innovadoras e integrales a precios competitivos,
-                                            certificando la excelencia en el producto y el servicio, de conformidad con
-                                            la
-                                            sociedad y el medio ambiente.
-                                        </p>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5">
-
-                                    <div class="text-center md:text-left">
-
-                                        <h4 class="font-semibold text-red-500 text-xl md:text-3xl mb-2">Vision</h4>
-                                        <p
-                                            class="font-normal text-gray-400 text-base md:text-xl xl:text-2xl leading-relaxed">
-                                            Ser líderes en el Salvador, en la comercialización de proyectos de
-                                            Lotificaciones y
-                                            construcción de viviendas innovadoras de conformidad con la sociedad y el
-                                            medio
-                                            ambiente.
-                                        </p>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <h1
-                                class="font-semibold text-3xl md:text-5xl text-center leading-normal mb-6 font-dancing text-ctmblue">
-                                Nuestros Valores</h1>
-                            <div class="flex flex-col md:flex-row justify-between scroll-animation">
-
-                                <div class="">
-                                    <div
-                                        class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5">
-                                        <div
-                                            class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
-                                            <i data-feather="heart" class="text-red-500"></i>
-                                        </div>
-
-                                        <div class="text-center md:text-left">
-                                            <h4 class="font-semibold text-ctmblue text-xl md:text-2xl mb-2">Lealtad
-                                            </h4>
-                                            <p
-                                                class="font-normal text-gray-400 text-base md:text-xl xl:text-1xl leading-relaxed">
-                                                Ser leales a nuestros clientes, colaboradores y proveedores.
-                                            </p>
-                                        </div>
-
-                                    </div>
-
-                                    <div
-                                        class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5">
-                                        <div
-                                            class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
-                                            <i data-feather="users" class="text-red-500"></i>
-                                        </div>
-                                        <div class="text-center md:text-left">
-                                            <h4 class="font-semibold text-ctmblue text-xl md:text-2xl mb-2">Respeto
-                                            </h4>
-                                            <p
-                                                class="font-normal text-gray-400 text-base md:text-xl xl:text-1xl leading-relaxed">
-                                                Respetar a nuestros clientes, colaboradores y proveedores.</p>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5">
-                                        <div
-                                            class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
-                                            <i data-feather="check-circle" class="text-red-500"></i>
-                                        </div>
-
-                                        <div class="text-center md:text-left">
-                                            <h4 class="font-semibold text-ctmblue text-xl md:text-2xl mb-2 ">Eficacia
-                                            </h4>
-                                            <p
-                                                class="font-normal text-gray-400 text-base md:text-xl xl:text-1xl leading-relaxed">
-                                                Ser eficaces en la comercialización de proyectos de lotificaciones y
-                                                construcción de
-                                                viviendas.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="">
-                                    <div
-                                        class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5">
-                                        <div
-                                            class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
-                                            <i data-feather="flag" class="text-red-500"></i>
-                                        </div>
-                                        <div class="text-center md:text-left">
-                                            <h4 class="font-semibold text-ctmblue  text-xl md:text-2xl mb-2">Compromiso
-                                            </h4>
-                                            <p
-                                                class="font-normal text-gray-400 text-base md:text-xl xl:text-1xl leading-relaxed">
-                                                Ser comprometidos con nuestros clientes, colaboradores y proveedores.
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5">
-                                        <div
-                                            class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
-                                            <i data-feather="share-2" class="text-red-500"></i>
-                                        </div>
-                                        <div class="text-center md:text-left">
-                                            <h4 class="font-semibold text-ctmblue text-xl md:text-2xl mb-2">Solidaridad
-                                            </h4>
-                                            <p
-                                                class="font-normal text-gray-400 text-base md:text-xl xl:text-1xl leading-relaxed">
-                                                Ser solidarios con nuestros clientes, colaboradores y proveedores.</p>
-                                        </div>
-                                    </div>
-
+                                <div class="text-center md:text-left">
+                                    <h4 class="font-semibold text-red-500 text-xl md:text-3xl mb-2">Mision</h4>
+                                    <p
+                                        class="font-normal text-gray-400 text-base md:text-xl xl:text-2xl leading-relaxed">
+                                        Satisfacer a nuestros compradores ofreciéndoles desarrollos en los terrenos
+                                        <br>y
+                                        viviendas habitacionales innovadoras e integrales a precios competitivos,
+                                        certificando la excelencia en el producto y el servicio, de conformidad con
+                                        la
+                                        sociedad y el medio ambiente.
+                                    </p>
                                 </div>
                             </div>
 
-                        </div> <!-- container.// -->
+
+
+                            <div class="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-5 px-10">
+
+                                <div class="text-center md:text-left">
+
+                                    <h4 class="font-semibold text-red-500 text-xl md:text-3xl mb-2">Vision</h4>
+                                    <p
+                                        class="font-normal text-gray-400 text-base md:text-xl xl:text-2xl leading-relaxed">
+                                        Ser líderes en el Salvador, en la comercialización de proyectos de
+                                        Lotificaciones y
+                                        construcción de viviendas innovadoras de conformidad con la sociedad y el
+                                        medio
+                                        ambiente.
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
+                    <div class="max-w-screen-xl mx-auto px-6">
+
+
+                        <h1
+                            class="font-semibold text-4xl md:text-5xl text-center leading-normal mb-6 font-dancing text-ctmblue">
+                            Nuestros Valores</h1>
+                        <div class="flex flex-wrap justify-between ">
+
+
+                            <div class="flex md:flex-row justify-center xl:justify-start space-x-4 mb-5 w-100 md:w-1/2">
+                                <div
+                                    class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
+                                    <i data-feather="heart" class="text-red-500"></i>
+                                </div>
+
+                                <div class="text-left md:text-left">
+                                    <h4 class="font-semibold text-ctmblue text-xl md:text-2xl mb-2">Lealtad
+                                    </h4>
+                                    <p
+                                        class="font-normal text-gray-400 text-base md:text-xl xl:text-2xl leading-relaxed">
+                                        Ser leales a nuestros clientes, colaboradores y proveedores.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <div class="flex md:flex-row justify-center xl:justify-start space-x-4 mb-5 w-100 md:w-1/2">
+                                <div
+                                    class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
+                                    <i data-feather="users" class="text-red-500"></i>
+                                </div>
+                                <div class="text-left">
+                                    <h4 class="font-semibold text-ctmblue text-xl md:text-2xl mb-2">Respeto
+                                    </h4>
+                                    <p
+                                        class="font-normal text-gray-400 text-base md:text-xl xl:text-2xl leading-relaxed">
+                                        Respetar a nuestros clientes, colaboradores y proveedores.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex md:flex-row justify-center xl:justify-start space-x-4 mb-5 w-100 md:w-1/2">
+                                <div
+                                    class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
+                                    <i data-feather="check-circle" class="text-red-500"></i>
+                                </div>
+
+                                <div class="text-left">
+                                    <h4 class="font-semibold text-ctmblue text-xl md:text-2xl mb-2 ">Eficacia
+                                    </h4>
+                                    <p
+                                        class="font-normal text-gray-400 text-base md:text-xl xl:text-2xl leading-relaxed">
+                                        Ser eficaces en la comercialización de proyectos de lotificaciones y
+                                        construcción de
+                                        viviendas.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex md:flex-row justify-center xl:justify-start space-x-4 mb-5 w-100 md:w-1/2">
+                                <div
+                                    class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
+                                    <i data-feather="flag" class="text-red-500"></i>
+                                </div>
+                                <div class="text-left">
+                                    <h4 class="font-semibold text-ctmblue  text-xl md:text-2xl mb-2">Compromiso
+                                    </h4>
+                                    <p
+                                        class="font-normal text-gray-400 text-base md:text-xl xl:text-2xl leading-relaxed">
+                                        Ser comprometidos con nuestros clientes, colaboradores y proveedores.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex md:flex-row justify-center xl:justify-start space-x-4 mb-5 w-100 md:w-1/2">
+                                <div
+                                    class="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
+                                    <i data-feather="share-2" class="text-red-500"></i>
+                                </div>
+                                <div class="text-left">
+                                    <h4 class="font-semibold text-ctmblue text-xl md:text-2xl mb-2">Solidaridad
+                                    </h4>
+                                    <p
+                                        class="font-normal text-gray-400 text-base md:text-xl xl:text-2xl leading-relaxed">
+                                        Ser solidarios con nuestros clientes, colaboradores y proveedores.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div> <!-- container.// -->
 
                 </div>
+
             </section>
             <div class="transition-section bg-cover bg-center h-screen flex items-center justify-center"
                 style="background-image: url('https://homes-real-estate.easybroker.com/themes/merida/built_in_images/img-merida.png');">
