@@ -765,57 +765,86 @@ export default {
                         class="bg-gray-100 flex flex-col lg:flex-row items-center justify-evenly py-10  rounded-3xl  scroll-animation">
 
 
-                        <div class="text-center lg:text-left mb-10 lg:mb-0">
-                            <h1 class="font-semibold text-ctmblue text-4xl md:text-5xl lg:text-6xl leading-normal mb-4">
-                                Contáctanos <br> para mas información
-                            </h1>
+                        <div class="flex flex-col items-center justify-center w-full md:w-1/2">
+                            <!--Angent profile-->
+                            <div class="flex flex-col items-center justify-center w-full md:w-1/2">
+                                <img src="/image/agent.jpg" alt="Image" class="w-60 h-60 rounded-full">
 
-                            <p class="font-normal text-blue-800 text-xl md:text-3xl font-dancing">
-                                <span class="text-gray-400">
-                                    Gracias por tu interés en nuestros servicios.
+                                <div class="flex items-center justify-center mt-5 flex-col w-100">
+                                    <h2 class="font-semibold text-ctmblue text-xl md:text-2xl lg:text-2xl  ">
+                                        Lic. Juan Carlos Saravia</h2>
+                                    <p class="font-semibold text-ctmblue text-base lg:text-xl">
+                                        Director de Ventas
+                                    </p>
+                                </div>
+                                <!--cel . +5...-->
+                                <div class="flex items-center justify-center flex-col w-100 mb-3">
+                                    <p class="font-semibold text-ctmblue text-base lg:text-xl">
+                                        Cel. +503941-4021
+                                    </p>
+                                    <p class="font-semibold text-gray-900 text-base lg:text-xl">
+                                        <a href="mailto:ventas@constructoras.com" class="text-blue-800">
+                                            <i data-feather="mail"></i> ventas@constructoras.com
+                                        </a>
+                                    </p>
+                                </div>
 
-                                    <br> Si tienes preguntas, comentarios o necesitas más
-                                    información,
-                                    <br> por favor llena el formulario a continuación.
-                                    <br>Nos pondremos en contacto contigo a la brevedad.</span>
-                            </p>
+                            </div>
+
+                            <div class="text-center lg:text-left mb-10 lg:mb-0 mt-4">
+
+                                <p class="font-normal text-blue-800 text-xl md:text-3xl font-dancing">
+                                    <span class="text-gray-400">
+                                        Gracias por tu interés en nuestros servicios.
+
+                                        <br> Si tienes preguntas, comentarios o necesitas más
+                                        información,
+                                        <br> por favor llena el formulario a continuación.
+                                        <br>Nos pondremos en contacto contigo a la brevedad.</span>
+                                </p>
+                            </div>
                         </div>
 
 
-                        <div class="hidden md:block bg-ctmred xl:relative px-6 py-3 rounded-3xl text-ctmblue">
+                        <div class="bg-ctmred xl:relative px-6 py-3 rounded-3xl text-ctmblue">
                             <!-- <div class="py-3">
                             <h3 class="font-semibold text-gray-900 text-3xl">Book a meeting</h3>
                         </div> -->
 
                             <!--spanish version-->
                             <div class="py-3">
-                                <h3 class="font-semibold text-ctmblue text-3xl">Tus Datos</h3>
+                                <h1
+                                    class="font-semibold text-gray-200 text-xl md:text-2xl lg:text-3xl leading-normal mb-4">
+                                    Contáctanos <br> para mas información
+                                </h1>
+
                             </div>
                             <div class="py-3">
-                                <input type="text" placeholder="Full Name"
+                                <input type="text" placeholder="Nombre Completo"
                                     class="px-4 py-4 w-96 bg-gray-100 placeholder-gray-400 rounded-xl outline-none border-red-500 text-ctmblue">
                             </div>
 
                             <div class="py-3">
-                                <input type="text" placeholder="Email"
+                                <input type="text" placeholder="Correo Electrónico"
                                     class="px-4 py-4 w-96 bg-gray-100 placeholder-gray-400 rounded-xl outline-none border-red-500 text-ctmblue">
                             </div>
 
                             <div class="py-3 relative">
-                                <input type="text" placeholder="Date"
-                                    class="px-4 py-4 w-96 bg-gray-100 font-normal text-lg placeholder-gray-400 rounded-xl outline-none border-red-500 text-ctmblue">
-
-                                <div class="absolute inset-y-0 left-80 ml-6 flex items-center text-xl text-gray-600">
-                                    <i data-feather="calendar"></i>
-                                </div>
+                                <!--Cuentanos en que estas interesado-->
+                                <select
+                                    class="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded-xl leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    <option>Selecciona un servicio</option>
+                                    <option>Asesoría</option>
+                                    <option>Proyectos</option>
+                                    <option>Maquinaria</option>
+                                    <option>Otro</option>
+                                </select>
                             </div>
 
-                            <div class="py-3 relative">
-                                <input type="text" placeholder="Virtual Meeting"
-                                    class="px-4 py-4 w-96 bg-gray-100 placeholder-gray-400 rounded-xl outline-none border-red-500 text-ctmblue">
-                                <div class="absolute inset-y-0 left-80 ml-6 flex items-center text-xl text-ctmred">
-                                    <i data-feather="chevron-down"></i>
-                                </div>
+                            <div class="py-3">
+                                <textarea placeholder="Mensaje"
+                                    class="px-4 py-4 w-96 bg-gray-100 placeholder-gray-400 rounded-xl outline-none border-red-500 text-ctmblue"
+                                    rows="5"></textarea>
                             </div>
 
                             <div class="py-3">
