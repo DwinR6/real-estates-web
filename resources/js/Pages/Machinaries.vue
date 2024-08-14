@@ -22,7 +22,7 @@
                                 @click="selectMachinary(machinary)">
                                 <div class="flex items-center justify-center bg-gray-200 rounded-lg  mb-4">
                                     <img v-if="machinary?.images?.length > 0" :src="getPath(machinary?.images[0]?.path)"
-                                        :alt="machinary.images[0]?.name" class=" object-cover rounded-lg w-full h-75" />
+                                        :alt="machinary.images[0]?.name" class="object-cover rounded-lg w-full h-75" />
                                 </div>
 
                                 <div class="flex flex-col justify-between h-full">
