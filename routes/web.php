@@ -30,6 +30,9 @@ Route::get('/advices', function () {
     return Inertia::render('Advices');
 })->name('advices');
 
+Route::get('/documents/download/{file}', function ($file) {
+    return response()->download(storage_path('app/public/documents/' . $file));
+})->name('documents.download');
 
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
 
