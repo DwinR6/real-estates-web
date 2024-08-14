@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\MachinaryController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -29,17 +30,16 @@ Route::get('/advices', function () {
     return Inertia::render('Advices');
 })->name('advices');
 
-Route::get('/maquinaria', function () {
-    return Inertia::render('Machinaries');
-})->name('machinaries');
 
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
+
 
 
 Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects.show');
 
 
-
+Route::get('/maquinaria', [MachinaryController::class, 'index'])->name('machinaries');
+Route::get('/maquinaria/{id}', [ProjectController::class, 'show'])->name('machinaries.show');
 
 
 
@@ -57,6 +57,14 @@ Route::middleware([
 
     Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
     Route::put('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update');
+
+    Route::delete('/projects/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+
+    Route::post('/maquinaria/crear', [MachinaryController::class, 'store'])->name('machinaries.store');
+    Route::get('/maquinaria/{id}/edit', [MachinaryController::class, 'edit'])->name('machinaries.edit');
+    Route::put('/maquinaria/{id}', [MachinaryController::class, 'update'])->name('machinaries.update');
+    Route::delete('/maquinaria/{id}', [MachinaryController::class, 'destroy'])->name('machinaries.destroy');
+    Route::post('/maquinaria/{id}/store-images', [MachinaryController::class, 'storeImages'])->name('machinaries.images.store');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {

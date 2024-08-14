@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MachinaryModel;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class MachinaryController extends Controller
 {
@@ -16,8 +17,8 @@ class MachinaryController extends Controller
 
     public function index()
     {
-        $machinaries = $this->machinaryModel->all();
-        return view('machinary.index', compact('machinaries'));
+        $machinaries = $this->machinaryModel->all()->load('images');
+        return Inertia::render('Machinaries', ['machinaries' => $machinaries]);
     }
 
     public function create()
@@ -27,8 +28,26 @@ class MachinaryController extends Controller
 
     public function store(Request $request)
     {
-        $machinary = $this->machinaryModel->create($request->all());
-        return redirect()->route('machinary.index');
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ], [
+            'name.required' => 'El campo nombre es requerido',
+            'description.required' => 'El campo descripción es requerido',
+        ]);
+
+        try {
+            $machinary = $this->machinaryModel->create($request->all());
+
+
+            return response()->json([
+                'success' => true,
+                'machinary_id' => $machinary->machinary_id,
+            ]);
+        } catch (\Exception $e) {
+
+            return $e;
+        }
     }
 
     public function show($id)
@@ -45,9 +64,25 @@ class MachinaryController extends Controller
 
     public function update(Request $request, $id)
     {
-        $machinary = $this->machinaryModel->find($id);
-        $machinary->update($request->all());
-        return redirect()->route('machinary.index');
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required',
+                'description' => 'required',
+            ], [
+                'name.required' => 'El campo nombre es requerido',
+                'description.required' => 'El campo descripción es requerido',
+            ]);
+
+            $machinary = $this->machinaryModel->find($id);
+            $machinary->update($request->all());
+            return response()->json([
+                'success' => true,
+                'machinary_id' => $machinary->machinary_id,
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return $th;
+        }
     }
 
     public function destroy($id)
@@ -57,11 +92,35 @@ class MachinaryController extends Controller
         return redirect()->route('machinary.index');
     }
 
-    public function addImage(Request $request, $id)
+    public function storeImages(Request $request, $id)
     {
-        $machinary = $this->machinaryModel->find($id);
-        $machinary->images()->create($request->all());
-        return redirect()->route('machinary.show', $id);
+        try {
+
+            $request->validate([
+                'images.*' => 'required|image|mimes:jpeg,png,jpg,gif',
+            ]);
+            $machinary = $this->machinaryModel->find($id);
+            $images = $request->file('images');
+            $storagedImages = [];
+            foreach ($images as $image) {
+                $name = $id . '_' . time() . '.' . $image->extension();
+                $path = $image->storeAs('machinary', $name, 'public');
+                $storagedImages[] = [
+                    'name' => $name,
+                    'path' => $path,
+                ];
+            }
+
+            $machinary->images()->createMany($storagedImages);
+
+            return response()->json([
+                'success' => true,
+                'machinary_id' => $machinary->machinary_id,
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return $th;
+        }
     }
 
     public function deleteImage($id, $imageId)
