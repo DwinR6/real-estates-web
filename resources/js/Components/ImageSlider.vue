@@ -60,6 +60,9 @@ export default {
             }
         },
     },
+    mounted() {
+        feather.replace();
+    },
 };
 </script>
 

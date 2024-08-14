@@ -457,7 +457,7 @@ export default {
                             <!--submit button-->
                             <div class="flex justify-center mb-6">
                                 <button @click="submit"
-                                    class="bg-gray-200 text-ctmblue text-bold px-8 py-4 rounded-md mt-4 text-2xl">Guardar
+                                    class="bg-gray-200 text-ctmblue font-bold px-8 py-4 rounded-md mt-4 text-2xl">Guardar
                                     Proyecto</button>
                             </div>
 
