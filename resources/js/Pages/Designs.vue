@@ -1,7 +1,6 @@
 <script setup>
 import { Head, Link, router } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import designDetails from '@/Components/designDetails.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 
@@ -50,11 +49,11 @@ export default {
 
                 </div>
 
-                <div class="flex flex-wrap -mx-2">
+                <div class="flex flex-wrap -mx-2" v-if="designs.length > 0">
                     <div v-for="(design, index) in designs" :key="index"
                         class="w-full md:w-1/2 lg:w-1/3 px-2 mb-4 flex hover:animate-scaleIn cursor-pointer scroll-animation">
                         <div class="bg-gray-100 p-4 rounded-lg  w-full flex flex-col">
-                            <Link :href="`/designs/${design.design_id}`"
+                            <Link :href="`/disenos/${design.design_id}`"
                                 class="bg-gray-100 p-4 rounded-lg w-full flex flex-col">
                             <div class="flex items-center justify-center bg-gray-200 rounded-lg  mb-4">
                                 <img v-if="design.images.length > 0" :src="getPath(design.images[0]?.path)"
@@ -65,6 +64,21 @@ export default {
                                 <h4 class="font-semibold text-blue-900 text-xl mb-2 text-center">{{ design.name }}</h4>
                             </div>
                             </Link>
+
+                        </div>
+                    </div>
+                </div>
+                <div v-else class="flex items-center justify-center h-full">
+                    <div class="flex items-center gap-4 flex-col">
+                        <p class="text-2xl text-gray-200 font-normal">No hay diseños disponibles</p>
+                        <div class="flex items-center gap-4 mt-4">
+                            <p class="text-2xl text-gray-200 font-normal">Ve a la seccion de edicion para agregar
+                                diseños</p>
+                            <Link :href="route('designs.create')"
+                                class="text-white px-4 py-2 rounded-lg hover:text-blue-900">
+                            <i data-feather="edit-2" class="h-6 w-6 text-gray-200"></i>
+                            </Link>
+
 
                         </div>
                     </div>

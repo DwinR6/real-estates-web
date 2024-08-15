@@ -51,49 +51,75 @@ export default {
 
             try {
                 if (this.design?.design_id) {
-                    // Primero, sube las imágenes
-                    if (this.$refs.imageLoader.files.length > 0) {
-                        await this.$refs.imageLoader.uploadImages();
-
-                    } else {
-                        console.log('No hay imágenes para subir');
-                    }
 
                     // Luego, envía la solicitud de actualización del Diseño
                     const response = await axios.put(route('designs.update', this.design.design_id), this.form.data());
+                    const formData = new FormData();
+                    this.$refs.imageLoader.files
+                        .forEach((image) => {
+                            formData.append('images[]', image);
+                        });
+                    const imageResponse = await axios.post(route('designs.images.store', this.design.design_id), formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
 
-                    // Si la solicitud es exitosa, puedes manejar la respuesta aquí
-                    console.log('Diseño actualizado:', response.data);
+                    console.log({
+                        response,
+                        imageResponse
+                    });
 
-                    //lanzar una notificación
-                    this.succesNotification();
-                    //reload the page
+                    if (response.data.design_id && imageResponse.data.design_id) {
+                        //lanzar una notificación
+                        this.succesNotification();
+                        //reload the page
 
-                    this.$inertia.reload();
+                        this.$inertia.reload();
+                    } else {
+                        await Swal.fire({
+                            title: 'Ocurrió un error',
+                            text: 'Por favor intente de nuevo',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    }
                 } else {
                     // Si es un nuevo Diseño, envía la solicitud de creación
                     const response = await axios.post(route('designs.store'), this.form.data());
+                    console.log(response);
+                    const formData = new FormData();
 
-                    //set the this.$refs.imageLoader.designId
-                    this.$refs.imageLoader.designId = response.data.design_id;
+                    this.$refs.imageLoader.files
+                        .forEach((image) => {
+                            formData.append('images[]', image);
+                        });
 
-                    //subir las imagenes
-                    if (this.$refs.imageLoader.files.length > 0 && response.data.design_id) {
-                        await this.$refs.imageLoader.uploadImages();
-                    } else {
-                        console.log('No hay imágenes para subir');
-                    }
-
-
-
-                    // Si la solicitud notifica se 44
-                    await Swal.fire({
-                        title: 'Diseño Guardado',
-                        text: 'El Diseño se ha guardado correctamente',
-                        icon: 'success',
-                        confirmButtonText: 'Ok'
+                    const imageResponse = await axios.post(route('designs.images.store', response.data.design_id), formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
                     });
 
+
+                    console.log({
+                        response,
+                        imageResponse
+                    });
+
+                    if (response.data.design_id && imageResponse.data.design_id) {
+                        //lanzar una notificación
+                        this.succesNotification();
+                        //reload the page
+                        this.$inertia.reload();
+                    } else {
+                        await Swal.fire({
+                            title: 'Ocurrió un error',
+                            text: 'Por favor intente de nuevo',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    }
 
                     // Si la solicitud es exitosa, puedes manejar la respuesta aquí
                     this.$inertia.visit(route('designs.edit', response.data.design_id));
@@ -296,7 +322,7 @@ export default {
                                     Sube imágenes del Diseño
                                 </label>
 
-                                <ImageUploader ref="imageLoader" :designId="design?.design_id || 0"
+                                <ImageUploader ref="imageLoader" :projectId="design?.design_id || 0"
                                     :onUpload="onUpload" />
                                 <!--button to save images test-->
                                 <!--<button @click="handleUpload"

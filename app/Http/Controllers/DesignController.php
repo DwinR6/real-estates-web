@@ -37,10 +37,10 @@ class DesignController extends Controller
                 'description' => 'required'
             ]);
 
-            $this->designModel->create($request->all());
+            $design = $this->designModel->create($request->all());
 
             return response()->json([
-                'design_id' => $this->designModel->design_id,
+                'design_id' => $design->design_id,
                 'message' => 'Design created successfully'
             ]);
         } catch (\Exception $e) {
@@ -95,7 +95,7 @@ class DesignController extends Controller
     {
         $design = $this->designModel->find($id)->load('images');
 
-        return Inertia::render('Designs/Show', [
+        return Inertia::render('Designs/Design', [
             'design' => $design
         ]);
     }

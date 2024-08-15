@@ -63,7 +63,7 @@ export default {
     },
     computed: {
         editdesignUrl() {
-            return `/designs/${this.design.design_id}/edit`;
+            return `/disenos/${this.design.design_id}/edit`;
         },
 
         getPath() {
@@ -211,7 +211,7 @@ export default {
             <div class="container max-w-screen-xl mx-auto px-4">
                 <div class="flex flex-wrap justify-center items-center gap-4 scroll-animation">
                     <!--back feather link icon-->
-                    <Link href="/designs" class="">
+                    <Link href="/disenos" class="">
                     <i data-feather="arrow-left" class="h-6 w-6 text-gray-200"></i>
                     </Link>
                     <h1

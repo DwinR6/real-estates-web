@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DesignController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MachinaryController;
 use App\Http\Controllers\ProjectController;
@@ -9,7 +10,6 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 
-Route::get('projects/create', [ProjectController::class, 'create'])->name('projects.create');
 
 Route::post('/images/upload', [ImageController::class, 'upload'])->name('images.upload');
 
@@ -39,15 +39,11 @@ Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
 
 
 
-Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects.show');
-
-
 Route::get('/maquinaria', [MachinaryController::class, 'index'])->name('machinaries');
-Route::get('/maquinaria/{id}', [ProjectController::class, 'show'])->name('machinaries.show');
 
 Route::get('/servicios', [ServiceController::class, 'index'])->name('services');
-Route::get('/servicios/{id}', [ProjectController::class, 'show'])->name('services.show');
 
+Route::get('/disenos', [DesignController::class, 'index'])->name('designs');
 
 
 Route::middleware([
@@ -59,13 +55,20 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+
+    Route::get('projects/create', [ProjectController::class, 'create'])->name('projects.create');
     Route::get('/projects/{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
-
-
     Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
     Route::put('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update');
-
     Route::delete('/projects/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+
+
+    Route::get('disenos/crear', [DesignController::class, 'create'])->name('designs.create');
+    Route::get('/disenos/{id}/edit', [DesignController::class, 'edit'])->name('designs.edit');
+    Route::post('/disenos', [DesignController::class, 'store'])->name('designs.store');
+    Route::put('/disenos/{id}', [DesignController::class, 'update'])->name('designs.update');
+    Route::delete('/disenos/{id}', [DesignController::class, 'destroy'])->name('designs.destroy');
+    Route::post('/disenos/{id}/store-images', [DesignController::class, 'storeImages'])->name('designs.images.store');
 
     Route::post('/maquinaria/crear', [MachinaryController::class, 'store'])->name('machinaries.store');
     Route::get('/maquinaria/{id}/edit', [MachinaryController::class, 'edit'])->name('machinaries.edit');
@@ -94,3 +97,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return Inertia::render('Auth/Register');
     })->name('teams.create');
 });
+
+Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects.show');
+Route::get('/disenos/{id}', [DesignController::class, 'show'])->name('designs.show');

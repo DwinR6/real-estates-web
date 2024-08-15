@@ -145,6 +145,10 @@ export default {
                                 <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="/servicios">
                                     Servicios
                                 </NavLink>
+                                <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="/disenos">
+                                    Diseño y Construcción
+                                </NavLink>
+
                                 <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="#contact">
                                     Contacto
                                 </NavLink>
