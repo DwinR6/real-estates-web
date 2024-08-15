@@ -73,12 +73,12 @@ Route::middleware([
     Route::delete('/maquinaria/{id}', [MachinaryController::class, 'destroy'])->name('machinaries.destroy');
     Route::post('/maquinaria/{id}/store-images', [MachinaryController::class, 'storeImages'])->name('machinaries.images.store');
 
-    
-    Route::post('/services/crear', [ServiceController::class, 'store'])->name('services.store');
-    Route::get('/services/{id}/edit', [ServiceController::class, 'edit'])->name('services.edit');
-    Route::put('/services/{id}', [ServiceController::class, 'update'])->name('services.update');
-    Route::delete('/services/{id}', [ServiceController::class, 'destroy'])->name('services.destroy');
-    Route::post('/services/{id}/store-images', [ServiceController::class, 'storeImages'])->name('services.images.store');
+
+    Route::post('/servicios/crear', [ServiceController::class, 'store'])->name('services.store');
+    Route::get('/servicios/{id}/edit', [ServiceController::class, 'edit'])->name('services.edit');
+    Route::put('/servicios/{id}', [ServiceController::class, 'update'])->name('services.update');
+    Route::delete('/servicios/{id}', [ServiceController::class, 'destroy'])->name('services.destroy');
+    Route::post('/servicios/{id}/store-images', [ServiceController::class, 'storeImages'])->name('services.images.store');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {

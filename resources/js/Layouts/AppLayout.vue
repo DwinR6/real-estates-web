@@ -142,9 +142,8 @@ export default {
                                 <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="/projects">
                                     Proyectos
                                 </NavLink>
-                                <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base"
-                                    href="/maquinaria">
-                                    Maquinaria
+                                <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="/servicios">
+                                    Servicios
                                 </NavLink>
                                 <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="#contact">
                                     Contacto
@@ -305,7 +304,15 @@ export default {
                             Proyectos
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('advices')" :active="route().current('advices')">
+                            Asistencia
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('servicios')" :active="route().current('servicios')">
                             Servicios
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('contact')" :active="route().current('contact')">
+                            Contacto
                         </ResponsiveNavLink>
 
 
