@@ -45,8 +45,8 @@ Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects
 Route::get('/maquinaria', [MachinaryController::class, 'index'])->name('machinaries');
 Route::get('/maquinaria/{id}', [ProjectController::class, 'show'])->name('machinaries.show');
 
-Route::get('/services', [MachinaryController::class, 'index'])->name('services');
-Route::get('/services/{id}', [ProjectController::class, 'show'])->name('services.show');
+Route::get('/servicios', [ServiceController::class, 'index'])->name('services');
+Route::get('/servicios/{id}', [ProjectController::class, 'show'])->name('services.show');
 
 
 

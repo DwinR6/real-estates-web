@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ServiceModel;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ServiceController extends Controller
 {
@@ -18,7 +19,7 @@ class ServiceController extends Controller
     {
         $services = $this->serviceModel->all()->load('images');
 
-        return response()->json($services);
+        return Inertia::render('Services', ['services' => $services]);
     }
 
 

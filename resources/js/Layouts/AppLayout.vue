@@ -307,11 +307,11 @@ export default {
                             Asistencia
                         </ResponsiveNavLink>
 
-                        <ResponsiveNavLink :href="route('servicios')" :active="route().current('servicios')">
+                        <ResponsiveNavLink :href="route('services')" :active="route().current('services')">
                             Servicios
                         </ResponsiveNavLink>
 
-                        <ResponsiveNavLink :href="route('contact')" :active="route().current('contact')">
+                        <ResponsiveNavLink href="#contact">
                             Contacto
                         </ResponsiveNavLink>
 
