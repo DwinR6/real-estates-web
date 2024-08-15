@@ -184,8 +184,11 @@ export default {
                                 @click="selectService(service)">
 
 
-                                <div class="flex flex-col mb-8">
-                                    <h4 class="font-semibold text-blue-900 text-xl mb-2 text-center">{{ service.name }}
+                                <div class="flex flex-col mb-8 px-10">
+                                    <h4
+                                        class="font-semibold text-blue-900 text-xl  md:text-2xl xl:text-4xl mb-2 text-center">
+                                        {{
+                                            service.name }}
                                     </h4>
                                     <p
                                         class="font-normal text-gray-400 text-base leading-relaxed text-center flex-grow">
