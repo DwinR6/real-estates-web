@@ -4,12 +4,12 @@
         <div class="flex items-center justify-center  rounded-lg  mb-4">
             <h1 class="text-2xl text-ctmblue font-bold">
                 <span v-if="service">Editar</span>
-                <span v-else>Agregar</span> Maquinaria
+                <span v-else>Agregar</span> Servicio
             </h1>
         </div>
         <div class="flex flex-col">
             <div class="mb-4">
-                <label for="name" class="text-gray-500 text-base font-semibold">¿Qué maquinaria es?</label>
+                <label for="name" class="text-gray-500 text-base font-semibold">¿Qué Servicio es?</label>
                 <input type="text" class="w-full p-2 border border-gray-300 rounded" v-model="form.name">
                 <span class="text-red-500 text-sm" v-if="form.errors.name">{{ form.errors.name[0] }}</span>
             </div>
@@ -107,11 +107,13 @@ export default {
                         await Swal.fire({
                             icon: 'success',
                             title: 'Guardado',
-                            text: 'La maquinaria y las imágenes han sido guardadas con éxito',
+                            text: 'El servicio y las imágenes han sido guardadas con éxito',
                             customClass: {
                                 popup: 'z-[99999] absolute'
                             },
                         });
+
+                        this.$inertia.reload();
 
                     } else {
                         this.$emit('close');
@@ -153,11 +155,13 @@ export default {
                         await Swal.fire({
                             icon: 'success',
                             title: 'Guardado',
-                            text: 'La maquinaria ha sido guardada y las imágenes han sido guardadas',
+                            text: 'El servicio ha sido guardada y las imágenes han sido guardadas',
                             customClass: {
                                 popup: 'z-[99999] absolute'
                             },
                         });
+
+                        this.$inertia.reload();
 
                     } else {
                         console.log({

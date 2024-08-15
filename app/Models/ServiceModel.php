@@ -20,7 +20,7 @@ class ServiceModel extends Model
 
     public $timestamps = true;
 
-    public function service()
+    public function images()
     {
         return $this->morphMany(ImageModel::class, 'imageable');
     }

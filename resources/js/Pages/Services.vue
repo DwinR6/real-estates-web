@@ -1,12 +1,12 @@
 <template>
     <div>
-        <AppLayout title="Maquinaria">
-            <section class="bg-ctmblue py-10 md:py-16 xl:relative" id="maquinaria">
+        <AppLayout title="Servicios">
+            <section class="bg-ctmblue py-10 md:py-16 xl:relative" id="servicio">
                 <div class="container max-w-screen-xl mx-auto px-4 min-h-full">
                     <div class="flex flex-row items-center mb-8  ">
                         <h1
                             class="font-semibold text-gray-00 text-2xl md:text-4xl lg:text-6xl text-left leading-normal mb-6 font-dancing text-gray-300 mr-4">
-                            Servicio de Alquiler de Maquinaria</h1>
+                            Contrata Nuestros Servicios</h1>
                         <!-- add new project button --> <!-- Show modal button -->
                         <button v-if="$page.props.auth.user" @click="openModal" class="text-white p-2 rounded">
                             <i data-feather="plus" class="h-6 w-6 text-2xl text-gray-200"></i>

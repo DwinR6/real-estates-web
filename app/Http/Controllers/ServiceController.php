@@ -36,7 +36,10 @@ class ServiceController extends Controller
 
             $service = $this->serviceModel->create($request->all());
 
-            return response()->json($service);
+            return response()->json([
+                'success' => true,
+                'service_id' => $service->service_id
+            ]);
         } catch (\Throwable $th) {
             //throw $th;
             throw new \Exception($th->getMessage());
@@ -61,7 +64,10 @@ class ServiceController extends Controller
 
             $service->update($request->all());
 
-            return response()->json($service);
+            return response()->json([
+                'success' => true,
+                'service_id' => $service->service_id
+            ]);
         } catch (\Throwable $th) {
             //throw $th;
             throw new \Exception($th->getMessage());
@@ -79,7 +85,13 @@ class ServiceController extends Controller
 
             $service->delete();
 
-            return response()->json(['message' => 'Service deleted']);
+            return response()->json([
+                'success' => true,
+                'message' => 'Service deleted',
+                'service_id' => $service->service_id
+
+
+            ]);
         } catch (\Throwable $th) {
             //throw $th;
             throw new \Exception($th->getMessage());
@@ -92,7 +104,7 @@ class ServiceController extends Controller
         try {
 
             $request->validate([
-                'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+                'images.*' => 'required|image|mimes:jpeg,png,jpg,gif'
             ]);
 
             $service = $this->serviceModel->find($id);
@@ -102,8 +114,9 @@ class ServiceController extends Controller
             }
 
             $storedImages = [];
+            $images = $request->file('images');
 
-            foreach ($request->file('images') as $image) {
+            foreach ($images as $image) {
                 $name = $id . '_' . time() . '.' . $image->extension();
                 $path = $image->storeAs('services', $name, 'public');
                 $storedImages[] = [
@@ -116,7 +129,10 @@ class ServiceController extends Controller
 
 
 
-            return response()->json($image);
+            return response()->json([
+                'success' => true,
+                'service_id' => $service->service_id
+            ]);
         } catch (\Throwable $th) {
             //throw $th;
             throw new \Exception($th->getMessage());
