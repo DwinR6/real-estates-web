@@ -3,6 +3,7 @@
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MachinaryController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -44,6 +45,9 @@ Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects
 Route::get('/maquinaria', [MachinaryController::class, 'index'])->name('machinaries');
 Route::get('/maquinaria/{id}', [ProjectController::class, 'show'])->name('machinaries.show');
 
+Route::get('/services', [MachinaryController::class, 'index'])->name('services');
+Route::get('/services/{id}', [ProjectController::class, 'show'])->name('services.show');
+
 
 
 Route::middleware([
@@ -68,6 +72,13 @@ Route::middleware([
     Route::put('/maquinaria/{id}', [MachinaryController::class, 'update'])->name('machinaries.update');
     Route::delete('/maquinaria/{id}', [MachinaryController::class, 'destroy'])->name('machinaries.destroy');
     Route::post('/maquinaria/{id}/store-images', [MachinaryController::class, 'storeImages'])->name('machinaries.images.store');
+
+    
+    Route::post('/services/crear', [ServiceController::class, 'store'])->name('services.store');
+    Route::get('/services/{id}/edit', [ServiceController::class, 'edit'])->name('services.edit');
+    Route::put('/services/{id}', [ServiceController::class, 'update'])->name('services.update');
+    Route::delete('/services/{id}', [ServiceController::class, 'destroy'])->name('services.destroy');
+    Route::post('/services/{id}/store-images', [ServiceController::class, 'storeImages'])->name('services.images.store');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
