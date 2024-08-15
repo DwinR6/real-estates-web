@@ -179,14 +179,23 @@ export default {
 
                     <div class="flex flex-wrap -mx-2">
                         <div v-for="(service, index) in services" :key="index"
-                            class="w-full md:w-1/2 lg:w-1/2 px-2 mb-4 flex hover:animate-scaleIn cursor-pointer scroll-animation">
-                            <div class="bg-gray-100 p-4 rounded-lg  w-full flex flex-col"
+                            class="w-full px-2 py-16 my-16 mb-4 flex hover:animate-scaleIn cursor-pointer scroll-animation">
+                            <div class="bg-gray-100 p-4 rounded-lg  w-full flex  flex-col md:flex-row items-center  "
                                 @click="selectService(service)">
 
+
+                                <div class="flex flex-col mb-8">
+                                    <h4 class="font-semibold text-blue-900 text-xl mb-2 text-center">{{ service.name }}
+                                    </h4>
+                                    <p
+                                        class="font-normal text-gray-400 text-base leading-relaxed text-center flex-grow">
+                                        {{ service.description }}
+                                    </p>
+                                </div>
+
                                 <div v-if="service.image"
-                                    class="flex items-center justify-center bg-gray-200 rounded-lg  mb-4  ">
-                                    <img :src="getPath(service.image)" :alt="service.name"
-                                        class="object-cover w-full  h-75">
+                                    class="flex items-center justify-center bg-gray-200 rounded-lg  mb-4  w-full">
+                                    <img :src="getPath(service.image)" :alt="service.name" class="object-cover w-full">
                                 </div>
                                 <div v-else
                                     class="flex items-center justify-center bg-gray-200 h-20 w-20 rounded-lg mx-auto mb-4">
@@ -194,10 +203,6 @@ export default {
 
 
                                 </div>
-                                <h4 class="font-semibold text-blue-900 text-xl mb-2 text-center">{{ service.name }}</h4>
-                                <p class="font-normal text-gray-400 text-base leading-relaxed text-center flex-grow">
-                                    {{ service.description }}
-                                </p>
                             </div>
                         </div>
 
