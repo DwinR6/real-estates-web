@@ -179,7 +179,7 @@ export default {
 
                     <div class="flex flex-wrap -mx-2">
                         <div v-for="(service, index) in services" :key="index"
-                            class="w-full px-2 py-16 my-16 mb-4 flex hover:animate-scaleIn cursor-pointer scroll-animation">
+                            class="w-full px-2 py-16 my-16 mb-4 flex  cursor-pointer scroll-animation">
                             <div class="bg-gray-100 p-4 rounded-lg  w-full flex  flex-col md:flex-row items-center  "
                                 @click="selectService(service)">
 
