@@ -5,7 +5,7 @@
                 'slider__image',
                 getPositionClass(index),
                 { active: isActive(index) }
-            ]" />
+            ]" @click="selectImage(image)" />
         </div>
         <div class="slider__action">
             <div id="prev" class="slider__button slider__button--prev flex items-center justify-start"
@@ -16,8 +16,43 @@
                 <i data-feather="chevron-right"></i>
             </div>
         </div>
+
+        <Modal :show="showModal" @close="closeModal">
+            <!--Show image in modal-->
+            <div v-if="imageSelected" class="flex items-center justify-center mx-auto">
+                <img :src="`/storage/${imageSelected.path}`" :alt="imageSelected.name"
+                    class="object-cover rounded-lg w-full h-75" />
+            </div>
+        </Modal>
     </div>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+import Modal from '@/Components/Modal.vue';
+
+
+const showModal = ref(false);
+let imageSelected = ref(null);
+
+const openModal = () => {
+    showModal.value = true;
+};
+
+const closeModal = () => {
+    showModal.value = false;
+    imageSelected = null;
+};
+
+const selectImage = (image) => {
+    imageSelected = image;
+    showModal.value = true;
+};
+
+const unsetImage = () => {
+    this.serviceSelected = null;
+};
+</script>
 
 <script>
 export default {
