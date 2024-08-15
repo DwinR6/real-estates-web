@@ -33,7 +33,7 @@
 
             <div class="bg-gray-200 w-100 p-8 mb-8 rounded-xl scroll-animation">
                 <label for="content" class="block font-medium text-ctmblue mb-10">
-                    Sube imágenes del Proyecto
+                    Sube imágenes del Servicio
                 </label>
 
                 <ImageUploader ref="imageLoader" :projectId="service?.project_id || 0" :onUpload="() => { }" />
