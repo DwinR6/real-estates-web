@@ -208,11 +208,15 @@ export default {
                             .forEach((image) => {
                                 formData.append('images[]', image);
                             });
-                        const imageResponse = await axios.post(route('designs.images.store', this.design.design_id), formData, {
+                        const imageResponse = this.$refs.imageLoader.files.length > 0 ? await axios.post(route('designs.images.store', this.design.design_id), formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
-                        });
+                        }) : {
+                            data: {
+                                design_id: this.design.design_id
+                            }
+                        };
 
                         console.log({
                             response,
@@ -267,12 +271,15 @@ export default {
                                 formData.append('images[]', image);
                             });
 
-                        const imageResponse = await axios.post(route('designs.images.store', response.data.design_id), formData, {
+                        const imageResponse = this.$refs.imageLoader.files.length > 0 ? await axios.post(route('designs.images.store', response.data.design_id), formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
-                        });
-
+                        }) : {
+                            data: {
+                                design_id: response.data.design_id
+                            }
+                        };
                         console.log({
                             response,
                             imageResponse

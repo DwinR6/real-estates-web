@@ -231,7 +231,7 @@ export default {
         async submitForm() {
             const result = await Swal.fire({
                 title: '¿Estás seguro?',
-                text: '¿Deseas guardar el Diseño?',
+                text: '¿Deseas guardar el Servicio?',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Si, Guardar',
@@ -246,7 +246,7 @@ export default {
             if (result.isConfirmed) {
                 try {
                     Swal.fire({
-                        title: 'Guardando Diseño',
+                        title: 'Guardando Servicio',
                         text: 'Por favor espere un momento',
                         icon: 'info',
                         showConfirmButton: false,
@@ -257,7 +257,7 @@ export default {
                     });
                     console.log(this.service);
                     if (this.service?.service_id) {
-                        // Luego, envía la solicitud de actualización del Diseño
+                        // Luego, envía la solicitud de actualización del Servicio
                         const response = await axios.put(route('services.update', this.service.service_id), this.form.data());
                         const formData = new FormData();
                         console.log(this.$refs.imageLoader);
@@ -265,11 +265,15 @@ export default {
                             .forEach((image) => {
                                 formData.append('images[]', image);
                             });
-                        const imageResponse = await axios.post(route('services.images.store', this.service.service_id), formData, {
+                        const imageResponse = this.$refs.imageLoader.files.length > 0 ? await axios.post(route('services.images.store', this.service.service_id), formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
-                        });
+                        }) : {
+                            data: {
+                                service_id: this.service.service_id
+                            }
+                        };
 
                         console.log({
                             response,
@@ -278,8 +282,8 @@ export default {
 
                         if (response.data.service_id && imageResponse.data.service_id) {
                             Swal.fire({
-                                title: 'Diseño Guardado',
-                                text: 'El Diseño se ha guardado correctamente',
+                                title: 'Servicio Guardado',
+                                text: 'El Servicio se ha guardado correctamente',
                                 icon: 'success',
                                 confirmButtonText: 'Ok'
                             });
@@ -314,7 +318,7 @@ export default {
                         }
 
                     } else {
-                        // Si es un nuevo Diseño, envía la solicitud de creación
+                        // Si es un nuevo Servicio, envía la solicitud de creación
                         const response = await axios.post(route('services.store'), this.form.data());
                         console.log(response);
                         const formData = new FormData();
@@ -324,11 +328,15 @@ export default {
                                 formData.append('images[]', image);
                             });
 
-                        const imageResponse = await axios.post(route('services.images.store', response.data.service_id), formData, {
+                        const imageResponse = this.$refs.imageLoader.files.length > 0 ? await axios.post(route('services.images.store', response.data.service_id), formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
-                        });
+                        }) : {
+                            data: {
+                                service_id: response.data.service_id
+                            }
+                        };
 
                         console.log({
                             response,
@@ -337,8 +345,8 @@ export default {
 
                         if (response.data.service_id && imageResponse.data.service_id) {
                             Swal.fire({
-                                title: 'Diseño Guardado',
-                                text: 'El Diseño se ha guardado correctamente',
+                                title: 'Servicio Guardado',
+                                text: 'El Servicio se ha guardado correctamente',
                                 icon: 'success',
                                 confirmButtonText: 'Ok'
                             });

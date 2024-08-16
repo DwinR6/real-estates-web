@@ -163,7 +163,7 @@ export default {
         async submitForm() {
             const result = await Swal.fire({
                 title: '¿Estás seguro?',
-                text: '¿Deseas guardar el Diseño?',
+                text: '¿Deseas guardar el Proyecto?',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Si, Guardar',
@@ -173,7 +173,7 @@ export default {
             if (result.isConfirmed) {
                 try {
                     Swal.fire({
-                        title: 'Guardando Diseño',
+                        title: 'Guardando Proyecto',
                         text: 'Por favor espere un momento',
                         icon: 'info',
                         showConfirmButton: false,
@@ -184,18 +184,22 @@ export default {
                     });
 
                     if (this.project?.project_id) {
-                        // Luego, envía la solicitud de actualización del Diseño
+                        // Luego, envía la solicitud de actualización del Proyecto
                         const response = await axios.put(route('projects.update', this.project.project_id), this.form.data());
                         const formData = new FormData();
                         this.$refs.imageLoader.files
                             .forEach((image) => {
                                 formData.append('images[]', image);
                             });
-                        const imageResponse = await axios.post(route('projects.images.store', this.project.project_id), formData, {
+                        const imageResponse = this.$refs.imageLoader.files.length > 0 ? await axios.post(route('projects.images.store', this.project.project_id), formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
-                        });
+                        }) : {
+                            data: {
+                                project_id: this.project.project_id
+                            }
+                        };
 
                         console.log({
                             response,
@@ -204,8 +208,8 @@ export default {
 
                         if (response.data.project_id && imageResponse.data.project_id) {
                             Swal.fire({
-                                title: 'Diseño Guardado',
-                                text: 'El Diseño se ha guardado correctamente',
+                                title: 'Proyecto Guardado',
+                                text: 'El Proyecto se ha guardado correctamente',
                                 icon: 'success',
                                 confirmButtonText: 'Ok'
                             });
@@ -240,7 +244,7 @@ export default {
                         }
 
                     } else {
-                        // Si es un nuevo Diseño, envía la solicitud de creación
+                        // Si es un nuevo Proyecto, envía la solicitud de creación
                         const response = await axios.post(route('projects.store'), this.form.data());
                         console.log(response);
                         const formData = new FormData();
@@ -250,11 +254,16 @@ export default {
                                 formData.append('images[]', image);
                             });
 
-                        const imageResponse = await axios.post(route('projects.images.store', response.data.project_id), formData, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data'
-                            }
-                        });
+                        const imageResponse = this.$refs.imageLoader.files.length > 0 ?
+                            await axios.post(route('projects.images.store', response.data.project_id), formData, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            }) : {
+                                data: {
+                                    project_id: response.data.project_id
+                                }
+                            };
 
                         console.log({
                             response,
@@ -263,8 +272,8 @@ export default {
 
                         if (response.data.project_id && imageResponse.data.project_id) {
                             Swal.fire({
-                                title: 'Diseño Guardado',
-                                text: 'El Diseño se ha guardado correctamente',
+                                title: 'Proyecto Guardado',
+                                text: 'El Proyecto se ha guardado correctamente',
                                 icon: 'success',
                                 confirmButtonText: 'Ok'
                             });
