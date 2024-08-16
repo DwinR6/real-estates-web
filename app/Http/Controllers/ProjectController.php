@@ -333,4 +333,33 @@ class ProjectController extends Controller
 
         return response()->json($project);
     }
+
+    public function destroy($id)
+    {
+        $project = $this->projectModel->find($id);
+        $project->delete();
+        return response()->json($project);
+    }
+
+    public function storeImages(Request $request, $id)
+    {
+        $project = $this->projectModel->find($id);
+        $images = $request->file('images');
+
+        $storgeImages = [];
+        foreach ($images as $image) {
+            $name = $id . '_' . time() . '.' . $image->extension();
+            $path = $image->storeAs('projects', $name, 'public');
+            $storgeImages[] = [
+                'name' => $name,
+                'path' => $path,
+            ];
+        }
+
+        $project->images()->createMany($storgeImages);
+        return response()->json([
+            'success' => true,
+            'project_id' => $project->project_id,
+        ]);
+    }
 }
