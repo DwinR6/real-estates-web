@@ -23,7 +23,7 @@
                                     <div class="flex items-center justify-center bg-gray-200 rounded-lg  mb-4">
                                         <img v-if="service?.images?.length > 0" :src="getPath(service?.images[0]?.path)"
                                             :alt="service.images[0]?.name"
-                                            class="object-cover rounded-lg w-full h-72" />
+                                            class="object-cover rounded-lg w-full h-52" />
                                     </div>
 
                                     <div class="flex flex-col justify-between h-full">
@@ -91,7 +91,6 @@ const openModal = () => {
 
 const closeModal = () => {
     showModal.value = false;
-    serviceSelected = null;
 };
 
 const selectService = (service) => {
@@ -114,7 +113,7 @@ const handleFormError = async (error) => {
         text: 'error.message,',
         customClass: {
             confirmButton: 'bg-ctmblue text-white px-8 py-4 rounded-md mt-4 text-base',
-            popup: 'bg-white p-4 rounded-lg z-50'
+            popup: 'bg-white p-4 rounded-lg z-[1000]',
         },
     });
 };

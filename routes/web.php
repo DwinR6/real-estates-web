@@ -61,7 +61,7 @@ Route::middleware([
     Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
     Route::put('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update');
     Route::delete('/projects/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
-
+    Route::post('/projects/{id}/store-images', [ProjectController::class, 'storeImages'])->name('projects.images.store');
 
     Route::get('disenos/crear', [DesignController::class, 'create'])->name('designs.create');
     Route::get('/disenos/{id}/edit', [DesignController::class, 'edit'])->name('designs.edit');

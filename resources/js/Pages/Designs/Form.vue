@@ -175,6 +175,194 @@ export default {
 
             }
         },
+
+        //Swal process t submit the form //if works then submit before method will be removed
+        async submitForm() {
+            const result = await Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¿Deseas guardar el Diseño?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Si, Guardar',
+                cancelButtonText: 'Cancelar'
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    Swal.fire({
+                        title: 'Guardando Diseño',
+                        text: 'Por favor espere un momento',
+                        icon: 'info',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
+                    if (this.design?.design_id) {
+                        // Luego, envía la solicitud de actualización del Diseño
+                        const response = await axios.put(route('designs.update', this.design.design_id), this.form.data());
+                        const formData = new FormData();
+                        this.$refs.imageLoader.files
+                            .forEach((image) => {
+                                formData.append('images[]', image);
+                            });
+                        const imageResponse = await axios.post(route('designs.images.store', this.design.design_id), formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        });
+
+                        console.log({
+                            response,
+                            imageResponse
+                        });
+
+                        if (response.data.design_id && imageResponse.data.design_id) {
+                            Swal.fire({
+                                title: 'Diseño Guardado',
+                                text: 'El Diseño se ha guardado correctamente',
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            });
+                            this.$refs.imageLoader.files = [];
+                            this.$refs.imageLoader.previewImages = [];
+                            this.$inertia.reload();
+                        } else if (response.data.design_id && !imageResponse.data.design_id) {
+                            Swal.fire({
+                                title: 'Los datos se guardaron, pero parece que hubo un error con las imágenes',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'warning',
+                                confirmButtonText: 'Ok',
+
+                            });
+
+                            this.$inertia.reload();
+
+                        } else if (!response.data.design_id && imageResponse.data.design_id) {
+                            Swal.fire({
+                                title: 'Ocurrió un error',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Ocurrió un error',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        }
+
+                    } else {
+                        // Si es un nuevo Diseño, envía la solicitud de creación
+                        const response = await axios.post(route('designs.store'), this.form.data());
+                        console.log(response);
+                        const formData = new FormData();
+
+                        this.$refs.imageLoader.files
+                            .forEach((image) => {
+                                formData.append('images[]', image);
+                            });
+
+                        const imageResponse = await axios.post(route('designs.images.store', response.data.design_id), formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        });
+
+                        console.log({
+                            response,
+                            imageResponse
+                        });
+
+                        if (response.data.design_id && imageResponse.data.design_id) {
+                            Swal.fire({
+                                title: 'Diseño Guardado',
+                                text: 'El Diseño se ha guardado correctamente',
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            });
+                            this.$refs.imageLoader.files = [];
+                            this.$refs.imageLoader.previewImages = [];
+                            this.$inertia.visit(route('designs.edit', response.data.design_id));
+                        } else if (response.data.design_id && !imageResponse.data.design_id) {
+                            Swal.fire({
+                                title: 'Los datos se guardaron, pero parece que hubo un error con las imágenes',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'warning',
+                                confirmButtonText: 'Ok',
+
+                            });
+
+                            this.$inertia.visit(route('designs.edit', response.data.design_id));
+
+                        } else if (!response.data.design_id && imageResponse.data.design_id) {
+                            Swal.fire({
+                                title: 'Ocurrió un error',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Ocurrió un error',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        }
+
+
+                    }
+
+
+
+
+                } catch (error) {
+                    console.error(error);
+                    if (error.response) {
+                        console.log('Error de respuesta:', error.response);
+                        // Errores de la respuesta del servidor (código de estado no 2xx)
+                        if (error.response && error.response.data.errors) {
+                            Swal.fire({
+                                title: 'Ocurrió un error',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Ocurrió un error',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        }
+                    } else if (error.request) {
+                        // La solicitud fue hecha pero no hubo respuesta
+                        console.log('Error:', error.request);
+                        Swal.fire({
+                            title: 'Ocurrió un error',
+                            text: 'Por favor intente de nuevo',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    } else {
+                        // Algo pasó al configurar la solicitud que activó un error
+                        console.log('Error:', error.message);
+                        Swal.fire({
+                            title: 'Ocurrió un error',
+                            text: 'Por favor intente de nuevo',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    }
+                }
+            }
+        },
         onUpload(savedImages) {
             const images = savedImages.map(image => {
                 return {
@@ -332,7 +520,7 @@ export default {
 
                             <!--submit button-->
                             <div class="flex justify-center mb-6">
-                                <button @click="submit"
+                                <button @click="submitForm"
                                     class="bg-gray-200 text-ctmblue font-bold px-8 py-4 rounded-md mt-4 text-2xl">Guardar
                                     Diseño</button>
                             </div>

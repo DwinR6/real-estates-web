@@ -68,6 +68,10 @@ export default {
     props: {
         service: Object
     },
+    components: {
+        QuillEditor,
+        ImageUploader
+    },
     data() {
         return {
             form: useForm({
@@ -223,6 +227,199 @@ export default {
 
             }
         },
+
+        async submitForm() {
+            const result = await Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¿Deseas guardar el Diseño?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Si, Guardar',
+                cancelButtonText: 'Cancelar',
+                customClass: {
+                    confirmButton: 'bg-ctmblue text-white px-8 py-4 rounded-md mt-4 text-base',
+                    cancelButton: 'bg-gray-200 text-gray-500 px-8 py-4 rounded-md mt-4 text-base',
+                    popup: 'bg-white p-4 rounded-lg z-[1000]',
+                },
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    Swal.fire({
+                        title: 'Guardando Diseño',
+                        text: 'Por favor espere un momento',
+                        icon: 'info',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                    console.log(this.service);
+                    if (this.service?.service_id) {
+                        // Luego, envía la solicitud de actualización del Diseño
+                        const response = await axios.put(route('services.update', this.service.service_id), this.form.data());
+                        const formData = new FormData();
+                        console.log(this.$refs.imageLoader);
+                        this.$refs.imageLoader.files
+                            .forEach((image) => {
+                                formData.append('images[]', image);
+                            });
+                        const imageResponse = await axios.post(route('services.images.store', this.service.service_id), formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        });
+
+                        console.log({
+                            response,
+                            imageResponse
+                        });
+
+                        if (response.data.service_id && imageResponse.data.service_id) {
+                            Swal.fire({
+                                title: 'Diseño Guardado',
+                                text: 'El Diseño se ha guardado correctamente',
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            });
+                            this.$refs.imageLoader.files = [];
+                            this.$refs.imageLoader.previewImages = [];
+                            this.$inertia.reload();
+                        } else if (response.data.service_id && !imageResponse.data.service_id) {
+                            Swal.fire({
+                                title: 'Los datos se guardaron, pero parece que hubo un error con las imágenes',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'warning',
+                                confirmButtonText: 'Ok',
+
+                            });
+
+                            this.$inertia.reload();
+
+                        } else if (!response.data.service_id && imageResponse.data.service_id) {
+                            Swal.fire({
+                                title: 'Ocurrió un error',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Ocurrió un error',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        }
+
+                    } else {
+                        // Si es un nuevo Diseño, envía la solicitud de creación
+                        const response = await axios.post(route('services.store'), this.form.data());
+                        console.log(response);
+                        const formData = new FormData();
+
+                        this.$refs.imageLoader.files
+                            .forEach((image) => {
+                                formData.append('images[]', image);
+                            });
+
+                        const imageResponse = await axios.post(route('services.images.store', response.data.service_id), formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        });
+
+                        console.log({
+                            response,
+                            imageResponse
+                        });
+
+                        if (response.data.service_id && imageResponse.data.service_id) {
+                            Swal.fire({
+                                title: 'Diseño Guardado',
+                                text: 'El Diseño se ha guardado correctamente',
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            });
+                            this.$refs.imageLoader.files = [];
+                            this.$refs.imageLoader.previewImages = [];
+                            this.$inertia.visit(route('services.edit', response.data.service_id));
+                        } else if (response.data.service_id && !imageResponse.data.service_id) {
+                            Swal.fire({
+                                title: 'Los datos se guardaron, pero parece que hubo un error con las imágenes',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'warning',
+                                confirmButtonText: 'Ok',
+
+                            });
+
+                            this.$inertia.visit(route('services.edit', response.data.service_id));
+
+                        } else if (!response.data.service_id && imageResponse.data.service_id) {
+                            Swal.fire({
+                                title: 'Ocurrió un error',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Ocurrió un error',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        }
+
+
+                    }
+
+
+
+
+                } catch (error) {
+                    console.error(error);
+                    if (error.response) {
+                        console.log('Error de respuesta:', error.response);
+                        // Errores de la respuesta del servidor (código de estado no 2xx)
+                        if (error.response && error.response.data.errors) {
+                            Swal.fire({
+                                title: 'Ocurrió un error',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Ocurrió un error',
+                                text: 'Por favor intente de nuevo',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        }
+                    } else if (error.request) {
+                        // La solicitud fue hecha pero no hubo respuesta
+                        console.log('Error:', error.request);
+                        Swal.fire({
+                            title: 'Ocurrió un error',
+                            text: 'Por favor intente de nuevo',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    } else {
+                        // Algo pasó al configurar la solicitud que activó un error
+                        console.log('Error:', error.message);
+                        Swal.fire({
+                            title: 'Ocurrió un error',
+                            text: 'Por favor intente de nuevo',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    }
+                }
+            }
+        }
     },
     computed: {
         getPath() {
