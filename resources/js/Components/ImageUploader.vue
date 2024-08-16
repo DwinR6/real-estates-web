@@ -25,20 +25,11 @@
 import Swal from 'sweetalert2';
 export default {
     props: {
-        projectId: {
-            type: Number,
-            required: true
-        },
-        onUpload: {
-            type: Function,
-            default: () => { }
-        }
     },
     data() {
         return {
             previewImages: [],
             files: [],
-            savedImages: []
         };
     },
     methods: {
@@ -57,87 +48,6 @@ export default {
             this.previewImages.splice(index, 1);
             this.files.splice(index, 1);
         },
-        async uploadImages() {
-            if (!this.files.length) {
-                return;
-            }
-
-
-
-            const formData = new FormData();
-            this.files.forEach(file => {
-                formData.append('images[]', file);
-            });
-            formData.append('project_id', this.projectId);
-            console.log('formData:', formData);
-            try {
-                const response = await axios.post('/images/upload', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-
-                //reset the preview images
-                for (let i = 0; i < this.previewImages.length; i++) {
-                    this.removeImage(i);
-                }
-
-
-
-                this.savedImages = response.data.savedImages;
-                this.onUpload(this.savedImages);
-
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Imágenes subidas con éxito',
-                    showConfirmButton: false,
-                    toast: true,
-                    timer: 2500,
-                    position: 'top-end'
-                });
-            } catch (error) {
-                console.error(error);
-                await Swal.fire({
-                    icon: 'error',
-                    title: 'Ocurrió un error al subir las imágenes',
-                    text: 'Por favor intente de nuevo',
-                    showConfirmButton: true
-                });
-            }
-        },
-
-        async syncImages() {
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: 'bg-green-500 text-white px-4 py-2 rounded',
-                    cancelButton: 'bg-red-500 text-white px-4 py-2 rounded'
-                },
-                buttonsStyling: false
-            })
-
-            swalWithBootstrapButtons.fire({
-                title: 'Subiendo imágenes',
-                html: 'Por favor espere...',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                onBeforeOpen: () => {
-                    Swal.showLoading()
-                },
-            });
-
-            await this.uploadImages();
-
-            swalWithBootstrapButtons.fire({
-                icon: 'success',
-                title: 'Imágenes subidas con éxito',
-                showConfirmButton: false,
-                timer: 1500
-            });
-
-        }
-        //show a swal alert while uploading images no can close
-
-
 
     }
 };
