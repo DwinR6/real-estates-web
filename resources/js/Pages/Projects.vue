@@ -55,7 +55,7 @@ export default {
                         class="w-full md:w-1/2 lg:w-1/3 px-2 mb-4 flex hover:animate-scaleIn cursor-pointer scroll-animation">
                         <div class="bg-gray-100 p-4 rounded-lg  w-full flex flex-col">
                             <Link :href="`/projects/${project.project_id}`"
-                                class="bg-gray-100 p-4 rounded-lg w-full flex flex-col">
+                                class="bg-gray-100  rounded-lg w-full flex flex-col">
                             <div class="flex items-center justify-center bg-gray-200 rounded-lg  mb-4">
                                 <img v-if="project.images.length > 0" :src="getPath(project.images[0]?.path)"
                                     :alt="project.images[0]?.name" class=" object-cover rounded-lg w-full h-48" />

@@ -51,13 +51,13 @@ export default {
 
                 <div class="flex flex-wrap -mx-2" v-if="designs.length > 0">
                     <div v-for="(design, index) in designs" :key="index"
-                        class="w-full md:w-1/2 lg:w-1/3 px-2 mb-4 flex hover:animate-scaleIn cursor-pointer scroll-animation">
+                        class="w-full md:w-1/2 lg:w-1/3 mb-4 flex hover:animate-scaleIn cursor-pointer scroll-animation">
                         <div class="bg-gray-100 p-4 rounded-lg  w-full flex flex-col">
                             <Link :href="`/disenos/${design.design_id}`"
-                                class="bg-gray-100 p-4 rounded-lg w-full flex flex-col">
+                                class="bg-gray-100 rounded-lg w-full flex flex-col">
                             <div class="flex items-center justify-center bg-gray-200 rounded-lg  mb-4">
                                 <img v-if="design.images.length > 0" :src="getPath(design.images[0]?.path)"
-                                    :alt="design.images[0]?.name" class=" object-cover rounded-lg w-full h-48" />
+                                    :alt="design.images[0]?.name" class=" object-cover rounded-lg w-full h-72" />
                             </div>
 
                             <div class="flex flex-col justify-between h-full">
@@ -71,7 +71,7 @@ export default {
                 <div v-else class="flex items-center justify-center h-full">
                     <div class="flex items-center gap-4 flex-col">
                         <p class="text-2xl text-gray-200 font-normal">No hay diseños disponibles</p>
-                        <div class="flex items-center gap-4 mt-4">
+                        <div class="flex items-center gap-4 mt-4" v-if="$page.props.auth.user">
                             <p class="text-2xl text-gray-200 font-normal">Ve a la seccion de edicion para agregar
                                 diseños</p>
                             <Link :href="route('designs.create')"

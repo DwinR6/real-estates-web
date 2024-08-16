@@ -19,7 +19,7 @@
 
         <Modal :show="showModal" @close="closeModal">
             <!--Show image in modal-->
-            <div v-if="imageSelected" class="flex items-center justify-center mx-auto">
+            <div v-if="imageSelected" class="flex items-center justify-center mx-auto px-10">
                 <img :src="`/storage/${imageSelected.path}`" :alt="imageSelected.name"
                     class="object-cover rounded-lg w-full h-75" />
             </div>

@@ -14,23 +14,27 @@
 
 
                     </div>
-                    <div v-for="(service, index) in services" :key="index"
-                        class="w-full md:w-1/2 lg:w-1/3 px-2 mb-4 flex hover:animate-scaleIn cursor-pointer scroll-animation">
-
-                        <div class="bg-gray-100 p-4 rounded-lg  w-full flex flex-col">
-                            <div class="bg-gray-100  rounded-lg w-full flex flex-col" @click="selectService(service)">
-                                <div class="flex items-center justify-center bg-gray-200 rounded-lg  mb-4">
-                                    <img v-if="service?.images?.length > 0" :src="getPath(service?.images[0]?.path)"
-                                        :alt="service.images[0]?.name" class="object-cover rounded-lg w-full h-75" />
-                                </div>
-
-                                <div class="flex flex-col justify-between h-full">
-                                    <div class="flex flex-col">
-                                        <h2 class="text-ctmblue text-xl font-semibold mb-2">{{ service.name }}</h2>
+                    <div class="flex flex-wrap -mx-2">
+                        <div v-for="(service, index) in services" :key="index"
+                            class="w-full md:w-1/2 lg:w-1/3 px-2 mb-4 flex hover:animate-scaleIn cursor-pointer scroll-animation">
+                            <div class="bg-gray-100 p-4 rounded-lg  w-full flex flex-col">
+                                <div class="bg-gray-100 rounded-lg w-full flex flex-col"
+                                    @click="selectService(service)">
+                                    <div class="flex items-center justify-center bg-gray-200 rounded-lg  mb-4">
+                                        <img v-if="service?.images?.length > 0" :src="getPath(service?.images[0]?.path)"
+                                            :alt="service.images[0]?.name"
+                                            class="object-cover rounded-lg w-full h-72" />
                                     </div>
 
+                                    <div class="flex flex-col justify-between h-full">
+                                        <div class="flex flex-col">
+                                            <h2 class="text-ctmblue text-xl font-semibold mb-2">{{ service.name }}</h2>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
 
@@ -41,15 +45,15 @@
                 <Form v-if="$page.props.auth.user" @formError="handleFormError" @close="closeModal"
                     :service="serviceSelected" />
                 <div v-else>
-                    <div class="py-10 md-py-16 xl:relative">
-                        <div class=" container max-w-screen-xl mx-auto px-4">
-                            <div class="flex flex-row items-center mb-8  ">
+                    <div class="py-10 md-py-16 xl:relative bg-gray-200 px-10">
+                        <div class="container max-w-screen-xl mx-auto p-8">
+                            <div class="flex flex-row items-center mb-8">
                                 <h1
-                                    class="font-semibold text-blue-900 text-xl md:text-2xl lg:text-3xl text-left leading-normal mb-6 font-dancing text-ctmblue mr-4">
+                                    class="font-semibold text-blue-900 text-2xl md:text-4xl lg:text-3xl xl:text-6xl text-left leading-normal mb-6 font-dancing text-ctmblue mr-4">
                                     {{ serviceSelected?.name }}</h1>
                             </div>
 
-                            <div v-if="serviceSelected?.images?.length > 0" class="mt-16 h-96">
+                            <div v-if="serviceSelected?.images?.length > 0" class="mt-16 h-96 mb-8">
                                 <ImageSlider :images="serviceSelected?.images" />
                             </div>
                             <div class="flex flex-col justify-between h-full">
