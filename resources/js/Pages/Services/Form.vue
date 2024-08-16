@@ -95,11 +95,15 @@ export default {
                         .forEach((image) => {
                             imageForm.append('images[]', image);
                         });
-                    const imageResponse = await axios.post(route('services.images.store', this.service.service_id), imageForm, {
+                    const imageResponse = this.$refs.imageLoader.files.length > 0 ? await axios.post(route('services.images.store', this.service.service_id), imageForm, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
-                    });
+                    }) : {
+                        data: {
+                            service_id: this.service.service_id
+                        }
+                    };
 
                     console.log({
                         response,
@@ -144,11 +148,15 @@ export default {
                             imageForm.append('images[]', image);
                         });
 
-                    const imageResponse = await axios.post(route('services.images.store', response.data.service_id), imageForm, {
+                    const imageResponse = this.$refs.imageLoader.files.length > 0 ? await axios.post(route('services.images.store', response.data.service_id), imageForm, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
-                    });
+                    }) : {
+                        data: {
+                            service_id: response.data.service_id
+                        }
+                    };
                     console.log({
                         response,
                         imageResponse
