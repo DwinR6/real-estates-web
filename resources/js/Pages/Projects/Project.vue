@@ -445,65 +445,6 @@ export default {
                     </div>
 
                 </div>
-
-                <!-- Desarrolladora | Agente | Contact Us-->
-                <div class="mt-8  bg-gray-200 p-4 rounded-3xl">
-                    <div class="flex flex-wrap mt-4">
-                        <div class="flex flex-wrap w-full md:w-1/2 ">
-                            <!--big message Estas interesado en este proyecto? centered vertically and horizontally-->
-                            <div class="w-full flex flex-col items-center justify-center">
-                                <h2 class="text-4xl font-bold mb-4 text-blue-900">Estas interesado en este proyecto?
-                                </h2>
-                                <p class="text-xl text-gray-600 font-normal">Envianos un mensaje y te contactaremos lo
-                                    mas
-                                    pronto posible.</p>
-                            </div>
-
-
-                        </div>
-                        <!-- Contact Us -- Form -- Estas interesa en este proyecto? Envianos un mensaje-->
-                        <div class="w-full md:w-1/2">
-                            <h2 class="text-2xl font-bold mb-4  text-blue-900">Contactanos</h2>
-
-
-                            <form action="" method="post">
-                                <div class="flex flex-wrap gap-4">
-
-                                    <div class="w-full">
-                                        <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
-                                        <input type="text" name="name" id="name" autocomplete="given-name"
-                                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                    </div>
-                                    <div class="w-full">
-                                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                        <input type="email" name="email" id="email" autocomplete="email"
-                                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                    </div>
-                                    <div class="w-full">
-                                        <label for="phone"
-                                            class="block text-sm font-medium text-gray-700">Telefono</label>
-                                        <input type="tel" name="phone" id="phone" autocomplete="tel"
-                                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                    </div>
-                                    <div class="w-full">
-                                        <label for="message"
-                                            class="block text-sm font-medium text-gray-700">Mensaje</label>
-                                        <textarea id="message" name="message" rows="4"
-                                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
-                                    </div>
-                                    <div class="w-full">
-                                        <button type="submit"
-                                            class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                            Enviar
-                                        </button>
-                                    </div>
-
-                                </div>
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
