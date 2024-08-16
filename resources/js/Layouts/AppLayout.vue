@@ -136,20 +136,25 @@ export default {
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex lg:mx-48">
                                 <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="/">Inicio
                                 </NavLink>
-                                <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="/advices">
+                                <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="/advices"
+                                    :active="route().current('advices')">
                                     Asistencia
                                 </NavLink>
-                                <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="/projects">
+                                <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="/projects"
+                                    :active="route().current('projects')">
                                     Proyectos
                                 </NavLink>
-                                <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="/servicios">
+                                <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="/servicios"
+                                    :active="route().current('services')">
                                     Servicios
                                 </NavLink>
-                                <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="/disenos">
+                                <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="/disenos"
+                                    :active="route().current('designs')">
                                     Diseño y Construcción
                                 </NavLink>
 
-                                <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="#contact">
+                                <NavLink class="text-blue-900 font-bold hover:text-red-800 text-base" href="#contact"
+                                    :active="route().current('contact')">
                                     Contacto
                                 </NavLink>
 
@@ -304,15 +309,20 @@ export default {
                 <!-- Responsive Navigation Menu -->
                 <div :class="{ 'block': isMenuOpen, 'hidden': !isMenuOpen }" class="sm:hidden">
                     <div class="bg-gray-200 pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('projects')" :active="route().current('projects')">
-                            Proyectos
-                        </ResponsiveNavLink>
+
                         <ResponsiveNavLink :href="route('advices')" :active="route().current('advices')">
                             Asistencia
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('projects')" :active="route().current('projects')">
+                            Proyectos
+                        </ResponsiveNavLink>
+
 
                         <ResponsiveNavLink :href="route('services')" :active="route().current('services')">
                             Servicios
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('designs')" :active="route().current('designs')">
+                            Diseño y Construcción
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink href="#contact">
@@ -482,15 +492,21 @@ export default {
                         <div class="text-center lg:text-left mb-10 lg:mb-0 w-1/1 md:w-1/2 xl:w-1/3">
                             <h4 class="font-semibold text-gray-900 text-2xl mb-6"></h4>
 
-                            <a href="#home"
+                            <a href="/"
                                 class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Inicio</a>
 
-                            <a href="/advices"
-                                class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Servicios</a>
+                            <a href="/asistencia"
+                                class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Asistencia</a>
 
                             <a href="/projects"
                                 class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Proyectos</a>
 
+                            <a href="/servicios"
+                                class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Servicios</a>
+
+                            <a href="/disenos"
+                                class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Diseño
+                                y Construcción</a>
 
                             <a href="#book"
                                 class="block font-light text-gray-400 text-xl mb-6 hover:text-gray-800 transition ease-in-out duration-300">Contacto</a>
