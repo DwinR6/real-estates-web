@@ -490,10 +490,8 @@ export default {
                                             </label>
                                             <select id="category" name="category" v-model="form.category"
                                                 class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 focus:outline-none focus:ring-cmtblue focus:border-cmtblue text-cmtblue rounded-md">
-                                                <option class="text-ctmblue" value="1">Lotificacion</option>
-                                                <option class="text-ctmblue" value="2">Urabnizacion</option>
-                                                <option class="text-ctmblue" value="3">Construccion</option>
-                                                <option class="text-ctmblue" value="4">Remodelacion</option>
+                                                <option class="text-ctmblue" value="1">Lotificación</option>
+                                                <option class="text-ctmblue" value="2">Urbanización</option>
                                             </select>
                                             <div v-if="form.errors.category" class="text-red-500 text-sm mt-1">
                                                 {{ form.errors.category[0] }}
