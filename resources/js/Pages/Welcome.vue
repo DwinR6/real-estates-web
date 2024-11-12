@@ -390,11 +390,10 @@ export default {
 
                             <p
                                 class="font-normal text-base md:text-xl text-gray-400 leading-relaxed mb-12 font-dancin  xl:w-1/2">
-                                Fundada en Anamorós en el 2021, por <span class="font-semibold text-blue-900">Josefina
-                                    Leonor
-                                    Reyes de
-                                    Cruz, </span>
-                                <span class="font-semibold text-blue-900">Lidia Argentina Cruz Reyes </span>
+                                Fundada en Anamorós en el 2021, por
+                                <span class="font-semibold text-blue-900">Josefina Leonor Reyes de Cruz, </span>
+                                <span class="font-semibold text-blue-900">Lidia Argentina Cruz Reyes, </span>
+                                <span class="font-semibold text-blue-900">Tania Vanessa Soriano Palacios </span>
                                 <span class="font-semibold text-blue-900">y Juan Ubaldo Cruz Reyes.</span><br>
                                 Con el objetivo de dignificar el sector inmobiliario en El Salvador,
                                 a través del desarrollo de lotificaciones
